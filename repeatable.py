@@ -1,9 +1,6 @@
 def Till():
     if not is_over(Grounds.Soil):
         till()
-    else:
-        till()
-        till()
 
 
 def useFertilizer():
@@ -11,7 +8,7 @@ def useFertilizer():
     use_item(Items.Fertilizer)
 
 
-def checkSeeds(size, entity):
+def checkSeeds(size, entity, buySeeds):
 
     entityList = [Entities.Carrots, Entities.Pumpkin]
     seedsList = [Items.Carrot_Seed, Items.Pumpkin_Seed]
@@ -38,4 +35,4 @@ def checkSeeds(size, entity):
             if item == Items.Carrot and amount <= seedCost[0][1] * minCost:
                 runLoop(50, [size, Entities.Carrots])
 
-    trade(seedsList[i])
+    trade(seedsList[i], buySeeds)

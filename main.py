@@ -5,7 +5,7 @@ def start():
     size = get_world_size()
     entity = Entities.Pumpkin
     water = 0
-    buySeeds = True
+    buySeeds = size * size
 
     while True:
         if entity == Entities.Pumpkin:
