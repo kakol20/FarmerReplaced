@@ -1,74 +1,50 @@
-def createMaze():
-	repeat = True
-	while repeat:
-		clear()
-		plant(Entities.Bush)
-		useFertilizer()
-		repeat = findTreasure()
+def startMaze():
+    clear()
+    plant(Entities.Bush)
+    while not is_over(Entities.Hedge) or is_over(Entities.Treasure):
+        useFertilizer()
+    findTreasure()
 
 
 def findTreasure():
-	if not is_over(Entities.Hedge):
-        return True
-
-    visited = []
-    route = [[0, 0]]
+    been = []
+    path = [[get_pos_x(), get_pos_y()]]
 
     while True:
         if is_over(Entities.Treasure):
             harvest()
             break
 
-        currX = get_pos_x()
-        currY = get_pos_y()
-        pos = [currX, currY]
-        branches = getBranching()
+        posX = get_pos_x()
+        posY = get_pos_y()
+        pos = [posX, posY]
+        freedom = getBranching()
         moved = False
-        found_unvisited = False
 
-        for dir in branches:
-            dirpos = dir[1]
-            visitedContains = False
-            routeContains = False
+        for direction in freedom:
+            dirpos = direction[1]
+            pathContains = False
+            beenContains = False
 
-            for p in route:
-                if p[0] == dirpos[0] and p[1] == dirpos[1]:
-                    routeContains = True
+            for p in path:
+                if (p[0] == dirpos[0]) and (p[1] == dirpos[1]):
+                    pathContains = True
+            for p in been:
+                if (p[0] == dirpos[0]) and (p[1] == dirpos[1]):
+                    beenContains = True
 
-            for p in visited:
-                if p[0] == dirpos[0] and p[1] == dirpos[1]:
-                    visitedContains = True
-
-            if not visitedContains and not routeContains:
-                move(dir[0])
-                route.append(pos)
+            if (beenContains == False) and (pathContains == False):
+                move(direction[0])
+                path.append(pos)
                 moved = True
                 break
+        if moved == False:
+            a = path.pop()
+            if len(freedom) == 2:
+                been.pop()
+            been.append(pos)
+            backtrack(a, posX, posY)
 
-            if not moved:
-                for dir in branches:
-                    dirpos = dir[1]
-                    visitedContains = False
-                    routeContains = False
-
-                    for p in route:
-                        if p[0] == dirpos[0] and p[1] == dirpos[1]:
-                            routeContains = True
-
-                    for p in visited:
-                        if p[0] == dirpos[0] and p[1] == dirpos[1]:
-                            visitedContains = True
-
-                    if not visitedContains and not routeContains:
-                        found_unvisited = True
-                        break
-
-                if not found_unvisited:
-	                a = route.pop()
-	                visited.append(pos)
-	                backtrack(a, currX, currY)
-					
-	return False
 
 def getBranching():
     directions = [North, East, South, West]
@@ -92,12 +68,13 @@ def getBranching():
         ind += 1
     return branching
 
+
 def backtrack(route, x, y):
-	if x > route[0]:
-		move(West)
-	elif x < route[0]:
-		move(East)
-	elif y > route[1]:
-		move(South)
-	elif y < route[1]:
-		move(North)
+    if x > route[0]:
+        move(West)
+    elif x < route[0]:
+        move(East)
+    elif y > route[1]:
+        move(South)
+    elif y < route[1]:
+        move(North)

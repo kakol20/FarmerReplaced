@@ -2,16 +2,21 @@ def start():
     clear()
     do_a_flip()
 
+    treasure = True
+
     size = get_world_size()
     entity = Entities.Pumpkin
     water = 0
     buySeeds = size * size
 
     while True:
-        if entity == Entities.Pumpkin:
-            replantPumpkin(size, entity, 0, buySeeds)
+        if treasure == True:
+            startMaze()
         else:
-            replant(size, entity, water, buySeeds)
+            if entity == Entities.Pumpkin:
+                replantPumpkin(size, entity, 0, buySeeds)
+            else:
+                replant(size, entity, water, buySeeds)
 
 
 def runLoop(times, list):
