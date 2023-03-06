@@ -1,7 +1,7 @@
 def startMaze():
     clear()
     plant(Entities.Bush)
-    while not is_over(Entities.Hedge) or is_over(Entities.Treasure):
+    while not is_over(Entities.Hedge) and not is_over(Entities.Treasure):
         useFertilizer()
     findTreasure()
 

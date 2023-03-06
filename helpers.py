@@ -12,3 +12,13 @@ def goto(x, y):
             move(East)
         else:
             move(West)
+
+
+def field_grid_init(size):
+    xArr = []
+    for x in range(size):
+        yArr = []
+        for y in range(size):
+            yArr.append(Entities.Grass)
+        xArr.append(yArr)
+    return xArr
