@@ -4,7 +4,7 @@ def start():
 
     treasure = False
 
-    poly = False
+    poly = True
 
     size = get_world_size()
     entity = Entities.Pumpkin
@@ -15,9 +15,9 @@ def start():
         if treasure == True:
             startMaze()
         elif poly == True:
-            companion_planting(size, water, 1)
+            polyculture(size, water, 1)
         else:
             if entity == Entities.Pumpkin:
-                replantPumpkin(size, entity, 0, buySeeds)
+                replantPumpkin(size, entity, buySeeds)
             else:
                 replant(size, entity, water, buySeeds)

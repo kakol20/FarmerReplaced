@@ -1,3 +1,5 @@
+#---------- General
+
 def replant(size, entity, water, buySeeds):
     for x in range(size):
         for y in range(size):
@@ -25,24 +27,52 @@ def replant(size, entity, water, buySeeds):
         move(East)
 
 
-def replantPumpkin(size, entity, water, buySeeds):
-    for z in range(3):  # go over 3 times to ensure all pumpkins grown
+#-------- Pumpkins
+
+def replantPumpkin(size, entity, buySeeds):
+    field = fieldGrid(size, False)
+
+    for z in range(3):
         for x in range(size):
             for y in range(size):
 
                 if not is_over(entity):
                     Till()
-                    if buySeeds > 0 and x == 0 and y == 0 and z == 0:
+                    if buySeeds > 0 and z == 0 and x == 0 and y == 0:
                         checkSeeds(size, entity, buySeeds)
                     plant(entity)
 
-                if water > 0:
-                    if get_water() <= water:
-                        use_item(Items.Water_Tank)
+                    if z > 0:
+                        field[x][y] = True
+                else:
+                    if z > 0 and can_harvest():
+                        field[x][y] = False
 
                 move(North)
             # y end
             move(East)
         # x end
     # z end
+    fillRemaining(size, entity, field)
+
     harvest()
+    goto(0, 0)
+
+
+def fillRemaining(size, entity, field):
+    keepChecking = True
+    while keepChecking:
+        hasLeft = False
+        for x in range(size):
+            for y in range(size):
+                if field[x][y] == True:
+                    hasLeft = True
+                    goto(x, y)
+                    if not is_over(entity):
+                        Till()
+                        plant(entity)
+                        useFertilizer()
+                    elif can_harvest():
+                        field[x][y] = False
+
+        keepChecking = hasLeft

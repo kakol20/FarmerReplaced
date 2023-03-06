@@ -14,11 +14,11 @@ def goto(x, y):
             move(West)
 
 
-def field_grid_init(size):
+def fieldGrid(size, element):
     xArr = []
     for x in range(size):
         yArr = []
         for y in range(size):
-            yArr.append(Entities.Grass)
+            yArr.append(element)
         xArr.append(yArr)
     return xArr

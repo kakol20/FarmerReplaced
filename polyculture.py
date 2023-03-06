@@ -1,16 +1,16 @@
-def companion_planting(size, water, buySeeds):
-    field = field_grid_init(size)
+def polyculture(size, water, buySeeds):
+    field = fieldGrid(size, Entities.Grass)
     while True:
         for x in range(size):
             for y in range(size):
 	            companion = get_companion()
-	            curCrop = field[x][y]
+	            entity = field[x][y]
 	            if can_harvest():
 	            	harvest()
-	            	if curCrop == Entities.Carrots:
+	            	if entity == Entities.Carrots:
 	            		Till()
-	            		checkSeeds(size, curCrop, buySeeds)
-	            	plant(curCrop)
+	            		checkSeeds(size, entity, buySeeds)
+	            	plant(entity)
 
 	            	if water > 0:
 						if get_water() <= water:
