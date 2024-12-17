@@ -36,6 +36,8 @@ def getAll():
 	quick_print(" ")
 	quick_print(required)
 	
+	treasure = None
+	
 	while True:
 		change_hat(Hats.Straw_Hat)
 		#goto(0, 0)
@@ -51,7 +53,7 @@ def getAll():
 			#replant(size, Entities.Cactus, water)
 			farmCactus()
 		elif num_items(Items.Gold) <= required[Items.Gold]:
-			startMaze(size)
+			treasure = startMaze(size, treasure)
 		elif num_items(Items.Bone) <= required[Items.Bone]:
 			change_hat(Hats.Dinosaur_Hat)
 			getBonesSimple(size)
