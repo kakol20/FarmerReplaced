@@ -1,23 +1,19 @@
-def start():
-    clear()
-    do_a_flip()
+#getCertain()
 
-    treasure = False
+#set_execution_speed(10)
 
-    poly = True
+upgrades = [
+	#Unlocks.Fertilizer, 
+	Unlocks.Cactus, 
+	Unlocks.Dinosaurs,
+	Unlocks.Mazes
+]
 
-    size = get_world_size()
-    entity = Entities.Pumpkin
-    water = 0.3
-    buySeeds = size * size
+quick_print(num_unlocked(Unlocks.Cactus))
 
-    while True:
-        if treasure == True:
-            startMaze()
-        elif poly == True:
-            polyculture(size, water, 1)
-        else:
-            if entity == Entities.Pumpkin:
-                replantPumpkin(size, entity, buySeeds)
-            else:
-                replant(size, entity, water, buySeeds)
+getAll()
+
+for upgrade in upgrades:
+	unlock(upgrade)
+
+print("Done")
