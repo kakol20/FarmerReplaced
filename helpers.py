@@ -4,17 +4,23 @@ def goto(x, y):
 	
 	while get_pos_x() != x:
 		if xDist > 0:
-			move(East)
+			if not move(East):
+				return False
 		elif xDist < 0:
-			move(West)
+			if not move(West):
+				return False
 		xDist = x - get_pos_x()
 		
 	while get_pos_y() != y:
 		if yDist > 0:
-			move(North)	
+			if not move(North):
+				return False
 		elif yDist < 0:
-			move(South)
+			if not move(South):
+				return False
 		yDist = y - get_pos_y()
+		
+	return True
 
 # -----
 			
@@ -27,13 +33,16 @@ def fieldGrid(size, element):
 		xArr.append(yArr)
 	return xArr
 	
-def distance(v1, v2):
+def distance(v1, v2, type):
 	a = (v1[0] - v2[0])
 	b = (v1[1] - v2[1])
 	
 	#return a + (0.5 * (b * b) * (1 / a)) # approximate
 	#return a + b
-	return approxSqrt(a * a + b * b)
+	if type == "euclidian":
+		return approxSqrt(a * a + b * b)
+	else:
+		return abs(a) + abs(b)
 	
 def approxSqrt(x):
 	yn = x
@@ -48,3 +57,9 @@ def approxSqrt(x):
 		i += 1
 			
 	return yn
+
+def checkNeighbour(neighbourPos, nodeSet): # checks if neighbour in open/closed set
+	for i in range(len(nodeSet)):
+		if nodeSet[i]["pos"] == neighbourPos:
+			return [True, i]
+	return [False, 0]

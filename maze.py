@@ -46,7 +46,7 @@ def secondSolve(treasure):
 	
 	startPos = (get_pos_x(), get_pos_y())
 	#startH = abs(treasure[0] - get_pos_x()) + abs(treasure[1] - get_pos_y())
-	startH = distance(startPos, treasure)
+	startH = distance(startPos, treasure, "euclidian")
 	
 	open.append({
 		"pos": startPos,
@@ -79,7 +79,7 @@ def secondSolve(treasure):
 				nPos = (get_pos_x(), get_pos_y())
 				nG = current["g"] + 1
 				#nG = distance(nPos, closed[0]["pos"])
-				nH = distance(nPos, treasure)
+				nH = distance(nPos, treasure, "euclidian")
 				neighbour = {
 					"pos": nPos,
 					"g": nG,
@@ -97,12 +97,6 @@ def secondSolve(treasure):
 							open[checkOpen[1]] = neighbour
 					else: # is not in open set
 						open.append(neighbour)
-	
-def checkNeighbour(neighbourPos, nodeSet): # checks if neighbour in open/closed set
-	for i in range(len(nodeSet)):
-		if nodeSet[i]["pos"] == neighbourPos:
-			return [True, i]
-	return [False, 0]
 	
 def gotoNode(node, closed):
 	currentPos = (get_pos_x(), get_pos_y())

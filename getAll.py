@@ -12,7 +12,7 @@ def getAll():
 		Items.Cactus: size * size,
 		Items.Gold: 0,
 		Items.Bone: 0,
-		Items.Weird_Substance: 0
+		Items.Weird_Substance: size * num_unlocked(Unlocks.Mazes)
 	}
 	
 	for upgrade in upgrades:
@@ -21,14 +21,6 @@ def getAll():
 		
 		for item in cost:
 			required[item] += cost[item]
-	
-	if num_items(Items.Gold) <= required[Items.Gold]:
-		yield = size * size * num_unlocked(Unlocks.Mazes)
-		subPerMaze = size * num_unlocked(Unlocks.Mazes)
-		needed = max(0, required[Items.Gold] - num_items(Items.Gold))
-		needed /= yield
-		needed *= subPerMaze
-		required[Items.Weird_Substance] = needed	
 	
 	water = 0.3
 	
@@ -56,7 +48,9 @@ def getAll():
 			treasure = startMaze(size, treasure)
 		elif num_items(Items.Bone) <= required[Items.Bone]:
 			change_hat(Hats.Dinosaur_Hat)
-			getBonesSimple(size)
-			#getBonesComplex(size)
+			if size % 2 == 0:
+				getBonesComplex(size)
+			else:
+				getBonesSimple(size)
 		else:
 			break
