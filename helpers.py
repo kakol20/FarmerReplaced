@@ -35,8 +35,16 @@ def fieldGrid(size, element):
 
 def harvestClear(size):
 	goto(0,0)
+	if get_entity_type() == Entities.Grass:
+		return
+	elif get_entity_type() == None:
+		return
+
 	for x in range(size):
 		for y in range(size):
+			entity = get_entity_type()
+			while not can_harvest():
+				do_a_flip()
 			harvest()
 			move(North)
 		move(East)

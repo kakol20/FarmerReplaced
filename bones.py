@@ -39,7 +39,7 @@ def getBonesOdd(size):
 		if i != 0:
 			path1.remove((i, 0))
 		path1.remove((i, size - 1))
-		path1.remove((7, i))
+		path1.remove((size, i))
 		
 	path1.append((size - 1, size - 1))
 	#path1.append((0, size - 1))
@@ -55,7 +55,7 @@ def getBonesOdd(size):
 		if i != 0:
 			path2.remove((i, size - 1))
 		path2.remove((i, 0))
-		path2.remove((7, i))
+		path2.remove((size, i))
 	
 	path2.append((size - 1, 0))
 	

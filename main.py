@@ -3,6 +3,9 @@ def main():
 	goto(0,0)
 
 	allUnlocks = [
+		Unlocks.Plant,
+		Unlocks.Expand,
+		Unlocks.Speed,
 		Unlocks.Watering,
 		Unlocks.Fertilizer,
 		Unlocks.Grass,
@@ -12,21 +15,53 @@ def main():
 		Unlocks.Dinosaurs,
 		Unlocks.Cactus,
 		Unlocks.Mazes,
-		Unlocks.Expand,
-		Unlocks.Speed,
-		Unlocks.Simulation
+		Unlocks.Sunflowers,
+		Unlocks.Leaderboard,
+		Unlocks.Polyculture
 	]
 
-	for repeat in range(2):
-		cheap = Unlocks.Fertilizer
-		cheapCosts = get_cost(cheap)
+	while True:
+		cheap = None
 		cheapCost = 0
-		for i in cheapCosts:
-			cheapCost = max(cheapCost, cheapCosts[i])
-			
+		
+		# find first valid unlock
 		for i in allUnlocks:
 			iCosts = get_cost(i)
-			if iCosts == None:
+			
+			# checked if unlocked or max level
+			if iCosts == {} or iCosts == None:
+				continue
+				
+			# check if item not unlock
+			invalid = False
+			for j in iCosts:
+				if num_unlocked(j) <= 0:
+					invalid = True
+					break	
+			if invalid:
+				continue
+			
+			cheap = i
+			for j in iCosts:
+				cheapCost = max(cheapCost, iCosts[j])
+			break
+			
+		if cheap == None:
+			break
+		
+		# find cheapest unlock
+		for i in allUnlocks:
+			iCosts = get_cost(i)
+			# checked if unlocked or max level
+			if iCosts == {} or iCosts == None:
+				continue
+			# check if item not unlock
+			invalid = False
+			for j in iCosts:
+				if num_unlocked(j) <= 0:
+					invalid = True
+					break	
+			if invalid:
 				continue
 				
 			iCost = 0
@@ -35,15 +70,11 @@ def main():
 			
 			if iCost < cheapCost:
 				cheap = i
-				cheapCosts = iCosts
 				cheapCost = iCost
-
+				
 		upgrades = [cheap]
-
-		quick_print(upgrades)
-
+		quick_print(cheap)
 		getAll(upgrades)
-
 		for upgrade in upgrades:
 			unlock(upgrade)
 		quick_print(" ")

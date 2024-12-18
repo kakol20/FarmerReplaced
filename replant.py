@@ -1,4 +1,5 @@
 def replant(size, entity, water):
+	goto(0, 0)
 	for x in range(size):
 		for y in range(size):
 			if can_harvest():
@@ -10,14 +11,13 @@ def replant(size, entity, water):
 				if (entity == Entities.Bush or entity == Entities.Grass) and get_ground_type() == Grounds.Soil:
 					till()
 					
-				if entity == Entities.Bush:
+				if entity == Entities.Bush and num_unlocked(Unlocks.Trees) > 0:
 					if x % 2 == 0 and y % 2 == 1 or x % 2 == 1 and y % 2 == 0:
 						plant(Entities.Tree)
 						useFertilizer()
 				if entity != Entities.Grass:
 					plant(entity)
-					if get_water() <= water and num_items(Items.Water) >= water:
-						use_item(Items.Water)
+					useWater(water)
 			elif get_entity_type() == None:
 				if (entity == Entities.Bush or entity == Entities.Grass) and get_ground_type() == Grounds.Soil:
 					till()
