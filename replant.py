@@ -4,7 +4,7 @@ def replant(size, entity, water):
 			if can_harvest():
 				harvest()
 				
-				if entity == Entities.Carrot or entity == Entities.Cactus:
+				if entity == Entities.Carrot or entity == Entities.Cactus or entity == Entities.Sunflower:
 					Till()
 					
 				if (entity == Entities.Bush or entity == Entities.Grass) and get_ground_type() == Grounds.Soil:
@@ -16,13 +16,12 @@ def replant(size, entity, water):
 						useFertilizer()
 				if entity != Entities.Grass:
 					plant(entity)
-					if get_water() <= water:
+					if get_water() <= water and num_items(Items.Water) >= water:
 						use_item(Items.Water)
 			elif get_entity_type() == None:
 				if (entity == Entities.Bush or entity == Entities.Grass) and get_ground_type() == Grounds.Soil:
 					till()
 				plant(entity)
-				
 					
 			move(North)
 		move(East)
@@ -70,4 +69,3 @@ def fillRemaining(size, entity, field):
 					elif can_harvest():
 						field[x][y] = False
 		keepChecking = hasLeft
-	
