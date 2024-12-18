@@ -12,8 +12,7 @@ def getAll(upgrades):
 		Items.Cactus: 0,
 		Items.Gold: 0,
 		Items.Bone: 0,
-		Items.Weird_Substance: size * num_unlocked(Unlocks.Mazes),
-		Items.Power: size * size * size,
+		Items.Weird_Substance: size * num_unlocked(Unlocks.Mazes)
 	}
 	
 	for upgrade in upgrades:
@@ -27,8 +26,7 @@ def getAll(upgrades):
 		required[i] *= num_unlocked(i)
 	
 	water = 0.3
-	
-	# quick_print([hayCount, woodCount, carrotCount, pumpkinCount, cactusCount, goldCount])
+
 	#quick_print(" ")
 	quick_print(required)
 	
@@ -38,27 +36,37 @@ def getAll(upgrades):
 		if num_unlocked(Unlocks.Dinosaurs) > 0:
 			change_hat(Hats.Straw_Hat)
 		goto(0, 0)
-		if num_items(Items.Hay) < required[Items.Hay]:	
-			replant(size, Entities.Grass, water)
-		elif num_items(Items.Wood) < required[Items.Wood] or num_items(Items.Weird_Substance) < required[Items.Weird_Substance]:
-			replant(size, Entities.Bush, water)
-		elif num_items(Items.Carrot) < required[Items.Carrot]:
-			replant(size, Entities.Carrot, water)
-		elif num_items(Items.Power) < required[Items.Power]:
-			farmSunflower(size, water)
-		elif num_items(Items.Pumpkin) < required[Items.Pumpkin]:
-			replantPumpkin(size, Entities.Pumpkin)
-		elif num_items(Items.Cactus) < required[Items.Cactus]:
-			farmSortable(Entities.Cactus, size)
-		elif num_items(Items.Gold) < required[Items.Gold]:
-			clear()
-			treasure = startMaze(size, treasure)
-		elif num_items(Items.Bone) < required[Items.Bone]:
-			clear()
-			change_hat(Hats.Dinosaur_Hat)
-			if size % 2 == 0:
-				getBonesEven(size)
-			else:
-				getBonesOdd(size)
+		
+		if num_items(Items.Power) < size * size and num_unlocked(Items.Power) > 0:
+			while num_items(Items.Power) < size * size * 30:
+				if num_items(Items.Hay) < size * size:
+					checkPolyculture(size, water, Entities.Grass)
+				elif num_items(Items.Wood) < size * size:
+					checkPolyculture(size, water, Entities.Bush) 
+				elif num_items(Items.Carrot) < size * size:
+					checkPolyculture(size, water, Entities.Carrot)
+				else:
+					farmSunflower(size, water)
 		else:
-			break
+			if num_items(Items.Hay) < required[Items.Hay]:
+				checkPolyculture(size, water, Entities.Grass)
+			elif num_items(Items.Wood) < required[Items.Wood] or num_items(Items.Weird_Substance) < required[Items.Weird_Substance]:
+				checkPolyculture(size, water, Entities.Bush)
+			elif num_items(Items.Carrot) < required[Items.Carrot]:
+				checkPolyculture(size, water, Entities.Carrot)
+			elif num_items(Items.Pumpkin) < required[Items.Pumpkin]:
+				replantPumpkin(size, Entities.Pumpkin)
+			elif num_items(Items.Cactus) < required[Items.Cactus]:
+				farmSortable(Entities.Cactus, size)
+			elif num_items(Items.Gold) < required[Items.Gold]:
+				clear()
+				treasure = startMaze(size, treasure)
+			elif num_items(Items.Bone) < required[Items.Bone]:
+				clear()
+				change_hat(Hats.Dinosaur_Hat)
+				if size % 2 == 0:
+					getBonesEven(size)
+				else:
+					getBonesOdd(size)
+			else:
+				break

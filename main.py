@@ -21,56 +21,37 @@ def main():
 	]
 
 	while True:
+		#if num_unlocked(Unlocks.Leaderboard) > 0:
+			#break
 		cheap = None
 		cheapCost = 0
 		
 		# find first valid unlock
 		for i in allUnlocks:
-			iCosts = get_cost(i)
+			checked = checkUnlock(i)
 			
-			# checked if unlocked or max level
-			if iCosts == {} or iCosts == None:
-				continue
-				
-			# check if item not unlock
-			invalid = False
-			for j in iCosts:
-				if num_unlocked(j) <= 0:
-					invalid = True
-					break	
-			if invalid:
-				continue
-			
-			cheap = i
-			for j in iCosts:
-				cheapCost = max(cheapCost, iCosts[j])
-			break
+			cost = 0
+			if checked[0]:
+				for j in checked[1]:
+					cost = max(cost, checked[1][j])
+				cheap = i
+				cheapCost = cost
+				break
 			
 		if cheap == None:
 			break
 		
 		# find cheapest unlock
 		for i in allUnlocks:
-			iCosts = get_cost(i)
-			# checked if unlocked or max level
-			if iCosts == {} or iCosts == None:
-				continue
-			# check if item not unlock
-			invalid = False
-			for j in iCosts:
-				if num_unlocked(j) <= 0:
-					invalid = True
-					break	
-			if invalid:
-				continue
-				
-			iCost = 0
-			for j in iCosts:
-				iCost = max(iCost, iCosts[j])
+			checked = checkUnlock(i)
 			
-			if iCost < cheapCost:
-				cheap = i
-				cheapCost = iCost
+			cost = 0
+			if checked[0]:
+				for j in checked[1]:
+					cost = max(cost, checked[1][j])
+				if cost < cheapCost:
+					cheap = i
+					cheapCost = cost
 				
 		upgrades = [cheap]
 		quick_print(cheap)

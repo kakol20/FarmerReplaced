@@ -4,14 +4,12 @@ def plantSortable(entity):
 	Till()
 	if get_entity_type() != entity:
 		if get_entity_type() != None:
-			while not can_harvest():
-				do_a_flip()
 			harvest()
 		plant(entity)
 		
 def sowSortable(entity):
 	size = get_world_size()
-	clear()
+	
 	for i in range(size):
 		for j in range(size):
 			useWater(0.3)

@@ -1,25 +1,24 @@
 def goto(x, y):
-	xDist = x - get_pos_x() # Positive if drone is east of the target space
-	yDist = y - get_pos_y() # Positive if drone is north of the target space
+	yDist = get_pos_y() - y  # Positive if drone is north of the target space
+	xDist = get_pos_x() - x  # Positive if drone is east of the target space
+	halfWorldSize = get_world_size() / 2
 	
-	while get_pos_x() != x:
-		if xDist > 0:
-			if not move(East):
-				return False
-		elif xDist < 0:
-			if not move(West):
-				return False
-		xDist = x - get_pos_x()
-		
 	while get_pos_y() != y:
-		if yDist > 0:
+		if yDist >= halfWorldSize or (-halfWorldSize <= yDist and yDist < 0):
 			if not move(North):
 				return False
-		elif yDist < 0:
+		else:
 			if not move(South):
 				return False
-		yDist = y - get_pos_y()
-		
+	
+	while get_pos_x() != x:
+		if xDist >= halfWorldSize or (-halfWorldSize <= xDist and xDist < 0):
+			if not move(East):
+				return False
+		else:
+			if not move(West):
+				return False
+			
 	return True
 
 # -----
@@ -49,3 +48,20 @@ def harvestClear(size):
 			move(North)
 		move(East)
 	goto(0,0)
+	
+def checkUnlock(unlock_):
+	costs = get_cost(unlock_)
+	
+	# check if unlocked or max level
+	if costs == {} or costs == None:
+		return [False, costs]
+		
+	# check if item not unlocked
+	invalid = False
+	for i in costs:
+		if num_unlocked(i) <= 0:
+			invalid = True
+			break
+	if invalid:
+		return [False, costs]
+	return [True, costs]
