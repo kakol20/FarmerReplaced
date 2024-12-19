@@ -1,24 +1,23 @@
 def farmSunflower(size, water):
-	clear()
+	#clear()
 	sorted_list = []
+	goto(0, 0)
 	
 	for x in range(size):
 		for y in range(size):
-			if can_harvest():
+			belowEntity = get_entity_type()
+			
+			if belowEntity != None:
+				while not can_harvest():
+					pass
 				harvest()
-				Till()
-				plant(Entities.Sunflower)
-				if get_water() <= water and num_items(Items.Water) >= water:
-					use_item(Items.Water)
-			elif get_entity_type() == None:
-				Till()
-				plant(Entities.Sunflower)
+			
+			Till()
+			plant(Entities.Sunflower)
+			useWater(water)
 				
 			value = measure()
 			while value == None:
-				if get_entity_type() != Entities.Sunflower:
-					Till()
-					plant(Entities.Sunflower)
 				value = measure()
 			
 			item = {

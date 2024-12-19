@@ -3,21 +3,21 @@ def main():
 	goto(0,0)
 
 	allUnlocks = [
-		Unlocks.Plant,
-		Unlocks.Expand,
-		Unlocks.Speed,
-		Unlocks.Watering,
-		Unlocks.Fertilizer,
-		Unlocks.Grass,
-		Unlocks.Trees,
-		Unlocks.Carrots,
-		Unlocks.Pumpkins,
-		Unlocks.Dinosaurs,
-		Unlocks.Cactus,
-		Unlocks.Mazes,
-		Unlocks.Sunflowers,
-		Unlocks.Leaderboard,
-		Unlocks.Polyculture
+		[Unlocks.Plant, Unlocks.Speed],
+		[Unlocks.Expand, Unlocks.Speed],
+		[Unlocks.Speed, None],
+		[Unlocks.Watering, Unlocks.Carrots],
+		[Unlocks.Fertilizer, Unlocks.Watering],
+		[Unlocks.Grass, None],
+		[Unlocks.Trees, Unlocks.Carrots],
+		[Unlocks.Carrots, Unlocks.Plant],
+		[Unlocks.Pumpkins, Unlocks.Trees],
+		[Unlocks.Dinosaurs, Unlocks.Pumpkins],
+		[Unlocks.Cactus, Unlocks.Cactus],
+		[Unlocks.Mazes, Unlocks.Mazes],
+		[Unlocks.Sunflowers, Unlocks.Watering],
+		[Unlocks.Leaderboard, Unlocks.Simulation],
+		[Unlocks.Polyculture, Unlocks.Mazes]
 	]
 
 	while True:
@@ -57,7 +57,7 @@ def main():
 		quick_print(cheap)
 		getAll(upgrades)
 		for upgrade in upgrades:
-			unlock(upgrade)
+			unlock(upgrade[0])
 		quick_print(" ")
 
 	print("Done")

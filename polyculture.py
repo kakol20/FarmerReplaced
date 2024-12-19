@@ -8,30 +8,48 @@ def polyculture(size, water, startEntity):
 					field[x][y] = Entities.Bush
 				else:
 					field[x][y] = Entities.Tree
+					
+	goto(0, 0)
 	
 	for x in range(size):
 		for y in range(size):
 			companion = get_companion()
 			entity = field[x][y]
-			if can_harvest():
+			below = get_entity_type()
+			
+			if below != None:
+				while not can_harvest():
+					pass
 				harvest()
-				if entity == Entities.Carrot:
-					Till()
-				elif entity == Entities.Tree and num_unlocked(Unlocks.Trees) == 0:
-					entity = Entities.Bush
+			
+			if entity == Entities.Tree and num_unlocked(Unlocks.Trees) == 0:
+				entity = Entities.Bush
 				
-				field[x][y] = entity
-				plant(entity)
-				useWater(water)
-				if entity == Entities.Tree:
-					useFertilizer()
-
-				#quick_print(companion)
-				#quick_print(field)
+			if entity != Entities.Grass:
+				Till()
 				
-				field[companion[1][0]][companion[1][1]] = companion[0]
-			elif get_entity_type() == None:
+			field[x][y] = entity
+			if entity == Entities.Grass:
+				if get_entity_type() != Entities.Grass:
+					plant(entity)
+			else:
 				plant(entity)
+			useWater(water)
+			if entity == Entities.Tree:
+				useFertilizer()
+				
+			if companion != None:
+				companionPos = (companion[1][0], companion[1][1])
+				#field[companion[1][0]][companion[1][1]] = companion[0]
+				# check neighbour if tree
+				if companion[0] == Entities.Tree:
+					if polyIsValidTree(companionPos, field,  size):
+						field[companionPos[0]][companionPos[1]] = Entities.Tree
+					else:
+						field[companionPos[0]][companionPos[1]] = Entities.Bush
+				else:
+					field[companionPos[0]][companionPos[1]] = companion[0]
+			
 			move(North)
 		move(East)
 		
@@ -40,3 +58,22 @@ def checkPolyculture(size, water, entity):
 		polyculture(size, water, entity)
 	else:
 		replant(size, entity, water)
+		
+def polyIsValidTree(pos, field, size):
+	if pos[0] - 1 >= 0:
+		if field[pos[0] - 1][pos[1]] == Entities.Tree:
+			return False
+			
+	if pos[0] + 1 < size:
+		if field[pos[0] + 1][pos[1]] == Entities.Tree:
+			return False
+			
+	if pos[1] - 1 >= 0:
+		if field[pos[0]][pos[1] - 1] == Entities.Tree:
+			return False
+			
+	if pos[1] + 1 < size:
+		if field[pos[0]][pos[1] + 1] == Entities.Tree:
+			return False
+			
+	return True

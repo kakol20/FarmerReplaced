@@ -2,13 +2,41 @@ def getAll(upgrades):
 	#clear()
 	#do_a_flip()
 	
+	#quick_print(get_cost(Entities.Carrot))
+	
 	size = get_world_size()
 	
+	carPlCost = get_cost(Entities.Carrot)
+	puPlCost = get_cost(Entities.Pumpkin)
+	sfPlCost = get_cost(Entities.Sunflower)
+	cacPlCost = get_cost(Entities.Cactus)
+	apPlCost = get_cost(Entities.Apple)
+	
+	intHayCost = 0
+	intWoodCost = 0
+	if carPlCost != {}:
+		intHayCost = size * size * num_unlocked(Items.Carrot) * carPlCost[Items.Hay]
+		intWoodCost = size * size * num_unlocked(Items.Carrot) * carPlCost[Items.Wood]
+		
+	intCarrotCost = 0
+	if puPlCost != {}:
+		intCarrotCost = size * size * num_unlocked(Items.Pumpkin) * puPlCost[Items.Carrot]
+	
+	if sfPlCost != {}:
+		intCarrotCost += size * size * num_unlocked(Items.Power) * sfPlCost[Items.Carrot]
+		
+	intPumpkinCost = 0
+	if cacPlCost != {}:
+		intPumpkinCost = size * size * num_unlocked(Items.Cactus) * cacPlCost[Items.Pumpkin]
+		
+	if apPlCost != {}:
+		intPumpkinCost += size * size * num_unlocked(Entities.Apple) * apPlCost[Items.Pumpkin]
+	
 	required = {
-		Items.Hay: size * size * num_unlocked(Unlocks.Carrots),
-		Items.Wood: size * size * num_unlocked(Unlocks.Carrots),
-		Items.Carrot: (size * size * num_unlocked(Unlocks.Pumpkins) * 2) + (size * size * num_unlocked(Items.Power)),
-		Items.Pumpkin: (size * size * num_unlocked(Unlocks.Cactus) * 2) + (size *  size * 2),
+		Items.Hay: intHayCost,
+		Items.Wood: intWoodCost,
+		Items.Carrot: intCarrotCost ,
+		Items.Pumpkin: intPumpkinCost,
 		Items.Cactus: 0,
 		Items.Gold: 0,
 		Items.Bone: 0,
@@ -16,7 +44,7 @@ def getAll(upgrades):
 	}
 	
 	for upgrade in upgrades:
-		cost = get_cost(upgrade)
+		cost = get_cost(upgrade[0])
 		quick_print(cost)
 		
 		for item in cost:
@@ -39,7 +67,7 @@ def getAll(upgrades):
 		
 		if num_items(Items.Power) < size * size and num_unlocked(Items.Power) > 0:
 			while num_items(Items.Power) < size * size * 30:
-				if num_items(Items.Hay) < size * size:
+				if num_items(Items.Hay) < intHayCost:
 					checkPolyculture(size, water, Entities.Grass)
 				elif num_items(Items.Wood) < size * size:
 					checkPolyculture(size, water, Entities.Bush) 
