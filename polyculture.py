@@ -46,7 +46,7 @@ def polyculture(size, water, startEntity):
 					if polyIsValidTree(companionPos, field,  size):
 						field[companionPos[0]][companionPos[1]] = Entities.Tree
 					else:
-						field[companionPos[0]][companionPos[1]] = Entities.Bush
+						field[companionPos[0]][companionPos[1]] = startEntity
 				else:
 					field[companionPos[0]][companionPos[1]] = companion[0]
 			

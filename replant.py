@@ -1,5 +1,4 @@
 def replant(size, entity, water):
-	goto(0, 0)
 	for x in range(size):
 		for y in range(size):
 			if get_entity_type() != None:
@@ -30,13 +29,17 @@ def replant(size, entity, water):
 		
 def replantPumpkin(size, entity):
 	field = fieldGrid(size, False)
+	goto(0, 0)
 	
 	for z in range(3):
 		for x in range(size):
 			for y in range(size):
-				
-				if get_entity_type() != entity:
-					harvest()
+				entityType = get_entity_type()
+				if entityType != entity:
+					if entityType != None:
+						while not can_harvest():
+							pass
+						harvest()
 					Till()
 					plant(entity)
 					
@@ -50,7 +53,7 @@ def replantPumpkin(size, entity):
 			
 	fillRemaining(size, entity, field)
 	harvest()
-	goto(0, 0)
+	#goto(0, 0)
 	
 def fillRemaining(size, entity, field):
 	keepChecking = True

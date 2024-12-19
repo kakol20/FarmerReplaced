@@ -20,22 +20,22 @@ def getAll(upgrades):
 		
 	intCarrotCost = 0
 	if puPlCost != {}:
-		intCarrotCost = size * size * num_unlocked(Items.Pumpkin) * puPlCost[Items.Carrot]
+		intCarrotCost = size * size * num_unlocked(Items.Pumpkin) * puPlCost[Items.Carrot] * 1.5
 	
 	if sfPlCost != {}:
-		intCarrotCost += size * size * num_unlocked(Items.Power) * sfPlCost[Items.Carrot]
+		intCarrotCost = max(intCarrotCost, size * size * num_unlocked(Items.Power) * sfPlCost[Items.Carrot])
 		
 	intPumpkinCost = 0
 	if cacPlCost != {}:
 		intPumpkinCost = size * size * num_unlocked(Items.Cactus) * cacPlCost[Items.Pumpkin]
 		
 	if apPlCost != {}:
-		intPumpkinCost += size * size * num_unlocked(Entities.Apple) * apPlCost[Items.Pumpkin]
+		intPumpkinCost = max(intPumpkinCost, size * size * num_unlocked(Entities.Apple) * apPlCost[Items.Pumpkin])
 	
 	required = {
 		Items.Hay: intHayCost,
 		Items.Wood: intWoodCost,
-		Items.Carrot: intCarrotCost ,
+		Items.Carrot: intCarrotCost,
 		Items.Pumpkin: intPumpkinCost,
 		Items.Cactus: 0,
 		Items.Gold: 0,
@@ -69,9 +69,9 @@ def getAll(upgrades):
 			while num_items(Items.Power) < size * size * 30:
 				if num_items(Items.Hay) < intHayCost:
 					checkPolyculture(size, water, Entities.Grass)
-				elif num_items(Items.Wood) < size * size:
+				elif num_items(Items.Wood) < intWoodCost:
 					checkPolyculture(size, water, Entities.Bush) 
-				elif num_items(Items.Carrot) < size * size:
+				elif num_items(Items.Carrot) < intCarrotCost:
 					checkPolyculture(size, water, Entities.Carrot)
 				else:
 					farmSunflower(size, water)
