@@ -53,7 +53,7 @@ def getCertain():
 	while True:
 		if num_unlocked(Unlocks.Dinosaurs) > 0:
 			change_hat(Hats.Straw_Hat)
-		goto(0, 0)
+		goto(getCurrentPos(), (0, 0), size)
 		
 		if num_items(Items.Power) < size * size and num_unlocked(Items.Power) > 0:
 			while num_items(Items.Power) < size * size * 30:

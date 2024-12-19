@@ -5,23 +5,24 @@ def replant(size, entity, water):
 				while not can_harvest():
 					pass
 				harvest()
-				
-			if entity == Entities.Carrot or entity == Entities.Cactus or entity == Entities.Sunflower:
-				Till()
 			
-			if entity == Entities.Grass and get_ground_type() == Grounds.Soil:
-				till()
-				
-			if entity == Entities.Bush and num_unlocked(Unlocks.Trees) > 0:
+			groundType = get_ground_type()
+					
+			if entity == Entities.Grass:
+				if groundType == Grounds.Soil:
+					till()
+			elif entity == Entities.Bush and num_unlocked(Unlocks.Trees) > 0:
 				if x % 2 == 0 and y % 2 == 1 or x % 2 == 1 and y % 2 == 0:
 					plant(Entities.Bush)
 				else:
 					plant(Entities.Tree)
 					useFertilizer()
-			elif entity != Entities.Grass:
+			else:
+				if groundType != Grounds.Soil and entity != Entities.Bush:
+					till()
 				plant(entity)
 				useWater(water)
-					
+				
 			move(North)
 		move(East)
 		
@@ -29,8 +30,6 @@ def replant(size, entity, water):
 		
 def replantPumpkin(size, entity):
 	field = fieldGrid(size, False)
-	goto(0, 0)
-	
 	for z in range(3):
 		for x in range(size):
 			for y in range(size):
@@ -63,7 +62,7 @@ def fillRemaining(size, entity, field):
 			for y in range(size):
 				if field[x][y] == True:
 					hasLeft = True
-					goto(x, y)
+					goto(getCurrentPos(), (x, y), size)
 					
 					if get_entity_type() != entity:
 						Till()

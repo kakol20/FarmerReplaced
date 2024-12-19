@@ -7,8 +7,9 @@ def plantSortable(entity):
 			harvest()
 		plant(entity)
 		
-def sowSortable(entity):
-	size = get_world_size()
+def sowSortable(entity, size):
+	#currentPos = getCurrentPos()
+	#goto(currentPos, (0, 0), size)
 	
 	for i in range(size):
 		for j in range(size):
@@ -19,14 +20,17 @@ def sowSortable(entity):
 		
 def sortSortable(size):
 	size = get_world_size()
-	goto(0, 0)
+	
+	currentPos = getCurrentPos()
+	goto(currentPos, (0, 0), size)
+	currentPos = (0, 0)
+	
 	sort_map = []
 	
-	for i in range(size):
-		for j in range(size):
-			x, y = get_pos_x(), get_pos_y()
-			while not can_harvest():
-				do_a_flip()
+	for x in range(size):
+		for y in range(size):
+			#while not can_harvest():
+				#pass
 			value = measure()
 			sort_map.append((x, y, value))
 			move(North)
@@ -37,39 +41,54 @@ def sortSortable(size):
 	while not sorted:
 		sorted = True
 		
+		currentPos = getCurrentPos()
 		for j in range(size - 1):
 			for i in range(size):
 				index = i * size + j
 				neighbour = index + 1
 				
 				if sort_map[index][2] > sort_map[neighbour][2]:
-					goto(sort_map[index][0], sort_map[index][1])
-					swap(North)
-					sort_map[index] = get_pos_x(), get_pos_y(), measure()
+					nextPos = (sort_map[index][0], sort_map[index][1])
+					goto(currentPos, nextPos, size)
+					currentPos = nextPos
 					
-					goto(sort_map[neighbour][0], sort_map[neighbour][1])
-					sort_map[neighbour] = get_pos_x(), get_pos_y(), measure()
+					swap(North)
+					sort_map[index] = currentPos[0], currentPos[1], measure()
+					
+					nextPos = (sort_map[neighbour][0], sort_map[neighbour][1])
+					goto(currentPos, nextPos, size)
+					currentPos = nextPos
+					
+					sort_map[neighbour] = currentPos[0], currentPos[1], measure()
 					
 					sorted = False
 		
+		currentPos = getCurrentPos()
 		for i in range(size - 1):
 			for j in range(size):
 				index = i * size + j
 				neighbour = (i + 1) * size + j
 				
 				if sort_map[index][2] > sort_map[neighbour][2]:
-					goto(sort_map[index][0], sort_map[index][1])
-					swap(East)
-					sort_map[index] = get_pos_x(), get_pos_y(), measure()
+					nextPos = (sort_map[index][0], sort_map[index][1])
+					goto(currentPos, nextPos, size)
+					currentPos = nextPos
 					
-					goto(sort_map[neighbour][0], sort_map[neighbour][1])
-					sort_map[neighbour] = get_pos_x(), get_pos_y(), measure()
+					swap(East)
+					sort_map[index] = currentPos[0], currentPos[1], measure()
+					
+					nextPos = (sort_map[neighbour][0], sort_map[neighbour][1])
+					goto(currentPos, nextPos, size)
+					currentPos = nextPos
+					
+					sort_map[neighbour] = currentPos[0], currentPos[1], measure()
 					
 					sorted = False
-	goto(size - 1, size - 1)
+	currentPos = getCurrentPos()
+	goto(currentPos, (size - 1, size - 1), size)
 	harvest()
 	
 def farmSortable(entity, size):
-	sowSortable(entity)
+	sowSortable(entity, size)
 	sortSortable(size)
 	

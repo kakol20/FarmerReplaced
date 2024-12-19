@@ -93,16 +93,18 @@ def secondSolve(treasure):
 					checkOpen = checkNeighbour(neighbour["pos"], open)
 					
 					if checkOpen[0]: # is in open set
-						if neighbour["f"] < open[checkOpen[1]]["f"]: # new path to neighbour is short
+						# new path to neighbour is shorter
+						if neighbour["f"] < open[checkOpen[1]]["f"]:
 							open[checkOpen[1]] = neighbour
 					else: # is not in open set
 						open.append(neighbour)
 	
 def gotoNode(node, closed):
 	currentPos = (get_pos_x(), get_pos_y())
+	size = get_world_size()
 	
 	if currentPos == node["parent"]["pos"]:
-		goto(node["pos"][0], node["pos"][1])
+		goto(currentPos, node["pos"], size)
 		return
 
 	toNodePath = []
@@ -141,7 +143,8 @@ def gotoNode(node, closed):
 				startI = i
 				i = len(toNodePath)
 				endWhile = True
-		goto(backtrack[tempI]["pos"][0], backtrack[tempI]["pos"][1])
+		goto(currentPos, backtrack[tempI]["pos"], size)
+		currentPos = backtrack[tempI]["pos"]
 		tempI += 1
 	
 	for i in range(startI, -1, -1):

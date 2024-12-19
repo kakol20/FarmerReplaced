@@ -20,7 +20,7 @@ def getAll(upgrades):
 		
 	intCarrotCost = 0
 	if puPlCost != {}:
-		intCarrotCost = size * size * num_unlocked(Items.Pumpkin) * puPlCost[Items.Carrot] * 1.5
+		intCarrotCost = size * size * num_unlocked(Items.Pumpkin) * puPlCost[Items.Carrot] * 2
 	
 	if sfPlCost != {}:
 		intCarrotCost = max(intCarrotCost, size * size * num_unlocked(Items.Power) * sfPlCost[Items.Carrot])
@@ -63,7 +63,7 @@ def getAll(upgrades):
 	while True:
 		if num_unlocked(Unlocks.Dinosaurs) > 0:
 			change_hat(Hats.Straw_Hat)
-		goto(0, 0)
+		goto(getCurrentPos(), (0, 0), size)
 		
 		if num_items(Items.Power) < size * size and num_unlocked(Items.Power) > 0:
 			while num_items(Items.Power) < size * size * 30:

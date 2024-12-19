@@ -15,14 +15,16 @@ def getBonesEven(size):
 		
 	#quick_print(path)
 	
+	currentPos = (0, 0)
 	index = 1
 	while True:
-		canMove = goto(path[index][0], path[index][1])
+		canMove = gotoDino(currentPos, path[index])
+		currentPos = path[index]
+		index += 1
+		
 		if not canMove:
 			change_hat(Hats.Straw_Hat)
 			break
-		
-		index += 1
 		
 		if index >= len(path):
 			index = 0
@@ -64,14 +66,16 @@ def getBonesOdd(size):
 	
 	#quick_print(path1)
 	
+	currentPos = (0, 0)
 	index = 1
-	while True:
-		canMove = goto(path1[index][0], path1[index][1])
+	while True:		
+		canMove = gotoDino(currentPos, path[index])
+		currentPos = path[index]
+		index += 1
+		
 		if not canMove:
 			change_hat(Hats.Straw_Hat)
 			break
-		
-		index += 1
 		
 		if index >= len(path1):
 			index = 0

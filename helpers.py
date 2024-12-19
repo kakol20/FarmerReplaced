@@ -1,48 +1,50 @@
-def goto(x, y):
-	yDist = get_pos_y() - y  # Positive if drone is north of the target space
-	xDist = get_pos_x() - x  # Positive if drone is east of the target space
-	halfWorldSize = get_world_size() / 2
+def goto(currentPos, targetPos, size):
+	xDist = targetPos[0] - currentPos[0]
+	yDist = targetPos[1] - currentPos[1]
 	
-	while get_pos_y() != y:
-		if yDist >= halfWorldSize or (-halfWorldSize <= yDist and yDist < 0):
-			if not move(North):
-				return False
-		else:
-			if not move(South):
-				return False
+	xDistA = abs(xDist)
+	yDistA = abs(yDist)
 	
-	while get_pos_x() != x:
-		if xDist >= halfWorldSize or (-halfWorldSize <= xDist and xDist < 0):
-			if not move(East):
-				return False
-		else:
-			if not move(West):
-				return False
-			
-	return True
+	xDistW = min(size - xDistA, xDistA)
+	yDistW = min(size - yDistA, yDistA)
 	
-def gotoDino(x, y):
-	xDist = x - get_pos_x() # Positive if drone is east of the target space
-	yDist = y - get_pos_y() # Positive if drone is north of the target space
+	if xDistW != xDistA:
+		xDist *= -1
 	
-	while get_pos_x() != x:
+	if yDistW != yDistA:
+		yDist *= -1
+	
+	for i in range(xDistW):
+		if xDist > 0:
+			move(East)
+		elif xDist < 0:
+			move(West)
+	
+	for i in range(yDistW):	
+		if yDist > 0:
+			move(North)
+		elif yDist < 0:
+			move(South)
+	
+def gotoDino(currentPos, targetPos):
+	xDist = targetPos[0] - currentPos[0]
+	yDist = targetPos[1] - currentPos[1]
+	
+	for i in range(abs(xDist)):
 		if xDist > 0:
 			if not move(East):
 				return False
 		elif xDist < 0:
 			if not move(West):
 				return False
-		xDist = x - get_pos_x()
-		
-	while get_pos_y() != y:
+				
+	for i in range(abs(yDist)):
 		if yDist > 0:
 			if not move(North):
 				return False
 		elif yDist < 0:
 			if not move(South):
 				return False
-		yDist = y - get_pos_y()
-		
 	return True
 
 # -----
@@ -55,9 +57,12 @@ def fieldGrid(size, element):
 			yArr.append(element)
 		xArr.append(yArr)
 	return xArr
+	
+def getCurrentPos():
+	return (get_pos_x(), get_pos_y())
 
 def harvestClear(size):
-	goto(0,0)
+	goto(getCurrentPos(), (0, 0), size)
 	if get_entity_type() == Entities.Grass:
 		return
 	elif get_entity_type() == None:
@@ -71,7 +76,7 @@ def harvestClear(size):
 			harvest()
 			move(North)
 		move(East)
-	goto(0,0)
+	goto(getCurrentPos(), (0, 0), size)
 	
 def checkUnlock(unlock_):
 	# check if parent is unlocked

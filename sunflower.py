@@ -1,7 +1,7 @@
 def farmSunflower(size, water):
 	#clear()
 	sorted_list = []
-	goto(0, 0)
+	goto(getCurrentPos(), (0, 0), size)
 	
 	for x in range(size):
 		for y in range(size):
@@ -25,7 +25,6 @@ def farmSunflower(size, water):
 				"value": value
 			}
 			inserted = False
-			
 			for i in range(len(sorted_list)):
 				if item["value"] > sorted_list[i]["value"]:
 					sorted_list.insert(i, item)
@@ -37,8 +36,16 @@ def farmSunflower(size, water):
 			move(North)
 		move(East)
 		
+	#for i in range(len(sorted_list)):
+		#quick_print(sorted_list[i]["pos"])
+		#for j in range(len(sorted_list)):
+			#if j != i:
+				#quick_print(sorted_list[i]["pos"] == sorted_list[j]["pos"])
+	
+	currentPos = getCurrentPos()
 	for i in sorted_list:
-		goto(i["pos"][0], i["pos"][1])
+		goto(currentPos, i["pos"], size)
+		currentPos = i["pos"]
 		while not can_harvest():
-			do_a_flip()
+			pass
 		harvest()

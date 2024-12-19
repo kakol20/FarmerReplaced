@@ -7,10 +7,8 @@ def polyculture(size, water, startEntity):
 				if x % 2 == 0 and y % 2 == 1 or x % 2 == 1 and y % 2 == 0:
 					field[x][y] = Entities.Bush
 				else:
-					field[x][y] = Entities.Tree
+					field[x][y] = Entities.Tree				
 					
-	goto(0, 0)
-	
 	for x in range(size):
 		for y in range(size):
 			companion = get_companion()
@@ -25,15 +23,18 @@ def polyculture(size, water, startEntity):
 			if entity == Entities.Tree and num_unlocked(Unlocks.Trees) == 0:
 				entity = Entities.Bush
 				
-			if entity != Entities.Grass:
+			field[x][y] = entity
+							
+			groundType = get_ground_type()
+			if entity == Entities.Grass:
+				if groundType == Grounds.Soil:
+					till()
+			elif entity == Entities.Carrot:
 				Till()
 				
-			field[x][y] = entity
-			if entity == Entities.Grass:
-				if get_entity_type() != Entities.Grass:
-					plant(entity)
-			else:
+			if entity != Entities.Grass:
 				plant(entity)
+				
 			useWater(water)
 			if entity == Entities.Tree:
 				useFertilizer()

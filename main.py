@@ -1,23 +1,23 @@
 def main():
 	#getCertain()
-	goto(0,0)
+	goto(getCurrentPos(), (0, 0), get_world_size())
 
 	allUnlocks = [
+		[Unlocks.Grass, None],
+		[Unlocks.Speed, None],
 		[Unlocks.Plant, Unlocks.Speed],
 		[Unlocks.Expand, Unlocks.Speed],
-		[Unlocks.Speed, None],
-		[Unlocks.Watering, Unlocks.Carrots],
-		[Unlocks.Fertilizer, Unlocks.Watering],
-		[Unlocks.Grass, None],
-		[Unlocks.Trees, Unlocks.Carrots],
 		[Unlocks.Carrots, Unlocks.Plant],
+		[Unlocks.Watering, Unlocks.Carrots],
+		[Unlocks.Trees, Unlocks.Carrots],
+		[Unlocks.Fertilizer, Unlocks.Watering],
+		[Unlocks.Sunflowers, Unlocks.Watering],
 		[Unlocks.Pumpkins, Unlocks.Trees],
 		[Unlocks.Dinosaurs, Unlocks.Pumpkins],
-		[Unlocks.Cactus, Unlocks.Cactus],
-		[Unlocks.Mazes, Unlocks.Mazes],
-		[Unlocks.Sunflowers, Unlocks.Watering],
-		[Unlocks.Leaderboard, Unlocks.Simulation],
-		[Unlocks.Polyculture, Unlocks.Mazes]
+		[Unlocks.Cactus, Unlocks.Pumpkins],
+		[Unlocks.Mazes, Unlocks.Pumpkins],
+		[Unlocks.Polyculture, Unlocks.Mazes],
+		[Unlocks.Leaderboard, Unlocks.Simulation]
 	]
 
 	while True:
