@@ -70,7 +70,7 @@ def getBonesOdd(size):
 	index = 1
 	while True:		
 		canMove = gotoDino(currentPos, path[index])
-		currentPos = path[index]
+		currentPos = path1[index]
 		index += 1
 		
 		if not canMove:
