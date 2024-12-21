@@ -72,7 +72,7 @@ def harvestClear(size):
 		for y in range(size):
 			entity = get_entity_type()
 			while not can_harvest():
-				do_a_flip()
+				pass
 			harvest()
 			move(North)
 		move(East)
