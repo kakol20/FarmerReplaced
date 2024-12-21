@@ -1,3 +1,4 @@
+# https://gist.github.com/zapakh/9a9b39a07964bbd27ab8cbd05ca35501
 def startMaze(size, treasure):
 	clear()
 	plant(Entities.Bush)
