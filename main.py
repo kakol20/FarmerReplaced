@@ -2,23 +2,23 @@ def main():
 	#getCertain()
 	goto(getCurrentPos(), (0, 0), get_world_size())
 
-	allUnlocks = [
-		[Unlocks.Grass, None],
-		[Unlocks.Speed, None],
-		[Unlocks.Plant, Unlocks.Speed],
-		[Unlocks.Expand, Unlocks.Speed],
-		[Unlocks.Carrots, Unlocks.Plant],
-		[Unlocks.Watering, Unlocks.Carrots],
-		[Unlocks.Trees, Unlocks.Carrots],
-		[Unlocks.Fertilizer, Unlocks.Watering],
-		[Unlocks.Sunflowers, Unlocks.Watering],
-		[Unlocks.Pumpkins, Unlocks.Trees],
-		[Unlocks.Dinosaurs, Unlocks.Pumpkins],
-		[Unlocks.Cactus, Unlocks.Pumpkins],
-		[Unlocks.Mazes, Unlocks.Pumpkins],
-		[Unlocks.Polyculture, Unlocks.Mazes],
-		[Unlocks.Leaderboard, Unlocks.Simulation]
-	]
+	allUnlocks = (
+		(Unlocks.Grass, None),
+		(Unlocks.Speed, None),
+		(Unlocks.Plant, Unlocks.Speed),
+		(Unlocks.Expand, Unlocks.Speed),
+		(Unlocks.Carrots, Unlocks.Plant),
+		(Unlocks.Watering, Unlocks.Carrots),
+		(Unlocks.Trees, Unlocks.Carrots),
+		(Unlocks.Fertilizer, Unlocks.Watering),
+		(Unlocks.Sunflowers, Unlocks.Watering),
+		(Unlocks.Pumpkins, Unlocks.Trees),
+		(Unlocks.Dinosaurs, Unlocks.Pumpkins),
+		(Unlocks.Cactus, Unlocks.Pumpkins),
+		(Unlocks.Mazes, Unlocks.Pumpkins),
+		(Unlocks.Polyculture, Unlocks.Mazes),
+		(Unlocks.Leaderboard, Unlocks.Simulation)
+	)
 
 	while True:
 		#if num_unlocked(Unlocks.Leaderboard) > 0:

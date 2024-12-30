@@ -65,7 +65,14 @@ def getAll(upgrades):
 			change_hat(Hats.Straw_Hat)
 		goto(getCurrentPos(), (0, 0), size)
 		
-		if num_items(Items.Power) < size * size and num_unlocked(Items.Power) > 0:
+		if num_items(Items.Weird_Substance) < required[Items.Weird_Substance] and num_unlocked(Items.Fertilizer) > 0:
+			if num_items(Items.Hay) < intHayCost:
+				checkPolyculture(size, water, Entities.Grass)
+			elif num_items(Items.Wood) < intWoodCost or num_unlocked(Items.Carrot) <= 0:
+				checkPolyculture(size, water, Entities.Bush) 
+			else:
+				checkPolyculture(size, water, Entities.Carrot)
+		elif num_items(Items.Power) < size * size and num_unlocked(Items.Power) > 0:
 			while num_items(Items.Power) < size * size * 30:
 				if num_items(Items.Hay) < intHayCost:
 					checkPolyculture(size, water, Entities.Grass)
@@ -78,7 +85,7 @@ def getAll(upgrades):
 		else:
 			if num_items(Items.Hay) < required[Items.Hay]:
 				checkPolyculture(size, water, Entities.Grass)
-			elif num_items(Items.Wood) < required[Items.Wood] or num_items(Items.Weird_Substance) < required[Items.Weird_Substance]:
+			elif num_items(Items.Wood) < required[Items.Wood]:
 				checkPolyculture(size, water, Entities.Bush)
 			elif num_items(Items.Carrot) < required[Items.Carrot]:
 				checkPolyculture(size, water, Entities.Carrot)
@@ -87,7 +94,7 @@ def getAll(upgrades):
 			elif num_items(Items.Cactus) < required[Items.Cactus]:
 				farmSortable(Entities.Cactus, size)
 			elif num_items(Items.Gold) < required[Items.Gold]:
-				clear()
+				#clear()
 				treasure = startMaze(size, treasure)
 			elif num_items(Items.Bone) < required[Items.Bone]:
 				clear()

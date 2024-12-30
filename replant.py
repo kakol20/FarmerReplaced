@@ -17,10 +17,12 @@ def replant(size, entity, water):
 				else:
 					plant(Entities.Tree)
 					useFertilizer()
+					useWater(water)
 			else:
 				if groundType != Grounds.Soil and entity != Entities.Bush:
 					till()
 				plant(entity)
+				useFertilizer()
 				useWater(water)
 				
 			move(North)
