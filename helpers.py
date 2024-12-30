@@ -81,13 +81,13 @@ def harvestClear(size):
 def checkUnlock(unlock_):
 	# check if parent is unlocked
 	if unlock_[1] != None and num_unlocked(unlock_[1]) <= 0:
-		return [False, None]
+		return (False, None)
 	
 	costs = get_cost(unlock_[0])
 	
 	# check if unlocked or max level
 	if costs == {} or costs == None:
-		return [False, costs]
+		return (False, costs)
 		
 	# check if item not unlocked
 	invalid = False
@@ -96,5 +96,5 @@ def checkUnlock(unlock_):
 			invalid = True
 			break
 	if invalid:
-		return [False, costs]
-	return [True, costs]
+		return (False, costs)
+	return (True, costs)
