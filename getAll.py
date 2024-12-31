@@ -95,7 +95,7 @@ def getAll(upgrades):
 				farmSortable(Entities.Cactus, size)
 			elif num_items(Items.Gold) < required[Items.Gold]:
 				#clear()
-				treasure = startMaze(size, treasure)
+				treasure = startMaze(size, treasure, True)
 			elif num_items(Items.Bone) < required[Items.Bone]:
 				clear()
 				change_hat(Hats.Dinosaur_Hat)
