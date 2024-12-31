@@ -13,19 +13,17 @@ def mazeOld(treasure):
 	facing = 0
 	directions = [North, East, South, West]
 	
-	if treasure != None and treasure[0] > treasure[1]:
-		facing = 1
+	if treasure != None:
+		if treasure[0] > treasure[1]:
+			facing = 1
 	else:
 		facing = 0
 	
 	while get_entity_type() != Entities.Treasure:
-		x = get_pos_x()
-		y = get_pos_y()
-		
-		move(directions[facing % 4])
+		moved = move(directions[facing % 4])
 		
 		facing += 1
-		if x == get_pos_x() and y == get_pos_y():
+		if not moved:
 			facing += 2
 	
 	#quick_print(measure())
