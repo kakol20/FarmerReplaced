@@ -19,6 +19,17 @@ def main():
 		(Unlocks.Polyculture, Unlocks.Mazes),
 		(Unlocks.Leaderboard, Unlocks.Simulation)
 	)
+	
+	data = {
+		"dinoPath": None,
+		"size": get_world_size(),
+		"upgrades": None,
+		"treasure": None,
+		"currentPos": getCurrentPos()
+	}
+	
+	if data["dinoPath"] == None:
+		data["dinoPath"] = updateDinoPath(data)
 
 	while True:
 		#if num_unlocked(Unlocks.Leaderboard) > 0:
@@ -53,11 +64,20 @@ def main():
 					cheap = i
 					cheapCost = cost
 				
-		upgrades = [cheap]
+		data["upgrades"] = [cheap]
 		quick_print(cheap)
-		getAll(upgrades)
-		for upgrade in upgrades:
+		data = getAll(data)
+		for upgrade in data["upgrades"]:
 			unlock(upgrade[0])
+			
+			if upgrade[0] == Unlocks.Expand:
+				data["size"] = get_world_size()
+				
+				data["dinoPath"] = updateDinoPath(data)
+			elif upgrade[0] == Unlocks.Dinosaurs:
+				if data["dinoPath"] == None:
+					data["dinoPath"] = updateDinoPath(data)
+
 		quick_print(" ")
 
 	print("Done")

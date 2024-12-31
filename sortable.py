@@ -7,23 +7,29 @@ def plantSortable(entity):
 			harvest()
 		plant(entity)
 		
-def sowSortable(entity, size):
+def sowSortable(entity, data):
 	#currentPos = getCurrentPos()
 	#goto(currentPos, (0, 0), size)
+	if data["currentPos"] != (0, 0):
+		goto(data["currentPos"], (0, 0), data["size"])
+		data["currentPos"] = (0, 0)
 	
-	for i in range(size):
-		for j in range(size):
+	for i in range(data["size"]):
+		for j in range(data["size"]):
 			useWater(0.3)
 			plantSortable(entity)
 			move(North)
 		move(East)
 		
-def sortSortable(size):
-	size = get_world_size()
+	return data
+		
+def sortSortable(data):
+	size = data["size"]
 	
-	currentPos = getCurrentPos()
-	goto(currentPos, (0, 0), size)
-	currentPos = (0, 0)
+	currentPos = data["currentPos"]
+	if data["currentPos"] != (0, 0):
+		goto(data["currentPos"], (0, 0), data["size"])
+		data["currentPos"] = (0, 0)
 	
 	sort_map = []
 	
@@ -41,7 +47,7 @@ def sortSortable(size):
 	while not sorted:
 		sorted = True
 		
-		currentPos = getCurrentPos()
+		#currentPos = getCurrentPos()
 		for j in range(size - 1):
 			for i in range(size):
 				index = i * size + j
@@ -63,7 +69,7 @@ def sortSortable(size):
 					
 					sorted = False
 		
-		currentPos = getCurrentPos()
+		#currentPos = getCurrentPos()
 		for i in range(size - 1):
 			for j in range(size):
 				index = i * size + j
@@ -84,11 +90,13 @@ def sortSortable(size):
 					sort_map[neighbour] = currentPos[0], currentPos[1], measure()
 					
 					sorted = False
-	currentPos = getCurrentPos()
-	goto(currentPos, (size - 1, size - 1), size)
+	#currentPos = getCurrentPos()
+	#goto(currentPos, (size - 1, size - 1), size)#
+	data["currentPos"] = currentPos
 	harvest()
+	return data
 	
-def farmSortable(entity, size):
-	sowSortable(entity, size)
-	sortSortable(size)
-	
+def farmSortable(entity, data):
+	data = sowSortable(entity, data)
+	data = sortSortable(data)
+	return data

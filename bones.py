@@ -13,21 +13,7 @@ def getBonesEven(size):
 	for i in range(0, size - 1, 1):
 		path.remove((i, 0))
 		
-	#quick_print(path)
-	
-	currentPos = (0, 0)
-	index = 1
-	while True:
-		canMove = gotoDino(currentPos, path[index])
-		currentPos = path[index]
-		index += 1
-		
-		if not canMove:
-			change_hat(Hats.Straw_Hat)
-			break
-		
-		if index >= len(path):
-			index = 0
+	return path
 
 def getBonesOdd(size):
 	path1 = []
@@ -64,18 +50,34 @@ def getBonesOdd(size):
 	for i in path2:
 		path1.append(i)	
 	
-	#quick_print(path1)
-	
+	return path1
+			
+def getBones(data):
 	currentPos = (0, 0)
+	data["currentPos"] = currentPos
 	index = 1
 	while True:		
-		canMove = gotoDino(currentPos, path1[index])
-		currentPos = path1[index]
+		canMove = gotoDino(currentPos, data["dinoPath"][index])
+		currentPos = data["dinoPath"][index]
 		index += 1
 		
 		if not canMove:
 			change_hat(Hats.Straw_Hat)
 			break
+		else:
+			data["currentPos"] = currentPos
 		
-		if index >= len(path1):
+		if index >= len(data["dinoPath"]):
 			index = 0
+	return data
+			
+def updateDinoPath(data):
+	if num_unlocked(Unlocks.Dinosaurs) == 0:
+		return None
+	out = []
+	if data["size"] % 2 == 0:
+		out = getBonesEven(data["size"])
+	else:
+		out = getBonesOdd(data["size"])
+		
+	return out

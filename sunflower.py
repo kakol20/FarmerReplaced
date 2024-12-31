@@ -1,10 +1,13 @@
-def farmSunflower(size, water):
+def farmSunflower(data, water):
 	#clear()
 	sorted_list = []
-	goto(getCurrentPos(), (0, 0), size)
+	if data["currentPos"] != (0, 0):
+		goto(data["currentPos"], (0, 0), data["size"])
+		data["currentPos"] = (0, 0)
+	currentPos = data["currentPos"]
 	
-	for x in range(size):
-		for y in range(size):
+	for x in range(data["size"]):
+		for y in range(data["size"]):
 			belowEntity = get_entity_type()
 			
 			if belowEntity != None:
@@ -14,6 +17,7 @@ def farmSunflower(size, water):
 			
 			Till()
 			plant(Entities.Sunflower)
+			useFertilizer()
 			useWater(water)
 				
 			value = measure()
@@ -35,17 +39,13 @@ def farmSunflower(size, water):
 			
 			move(North)
 		move(East)
-		
-	#for i in range(len(sorted_list)):
-		#quick_print(sorted_list[i]["pos"])
-		#for j in range(len(sorted_list)):
-			#if j != i:
-				#quick_print(sorted_list[i]["pos"] == sorted_list[j]["pos"])
 	
-	currentPos = getCurrentPos()
+	currentPos = (0, 0)
 	for i in sorted_list:
-		goto(currentPos, i["pos"], size)
+		goto(currentPos, i["pos"], data["size"])
 		currentPos = i["pos"]
 		while not can_harvest():
 			pass
 		harvest()
+	data["currentPos"] = currentPos
+	return data
