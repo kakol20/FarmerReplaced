@@ -1,8 +1,24 @@
 def startMaze(data):
 	#clear()
-	plant(Entities.Bush)
-	while get_entity_type() != Entities.Hedge and get_entity_type() != Entities.Treasure:
-		use_item(Items.Weird_Substance, data["size"] * num_unlocked(Unlocks.Mazes))
+	#data["currentPos"] = (0, 0)
+	
+	below = get_entity_type()
+	if below == None or below == Entities.Grass:
+		plant(Entities.Bush)
+	elif below != Entities.Bush:
+		while not can_harvest():
+			pass
+		harvest()
+		plant(Entities.Bush)
+	
+	substanceNeed = data["size"] * num_unlocked(Unlocks.Mazes)
+	
+	if num_items(Items.Weird_Substance) < substanceNeed:
+		#quick_print(num_items(Items.Weird_Substance))
+		#pass
+		return data
+	
+	use_item(Items.Weird_Substance, substanceNeed)
 				
 	return mazeOld(data)
 	

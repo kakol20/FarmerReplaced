@@ -67,13 +67,14 @@ def main():
 					cheapCost = cost
 				
 		data["upgrades"] = [cheap]
-		if data["size"] % 2 == 1 and num_unlocked(Unlocks.Dinosaurs) > 0 and cheap[0] != Unlocks.Expand:
-			data["upgrades"].append((Unlocks.Expand, Unlocks.Speed))
 		
 		quick_print(data["upgrades"])
 		data = getAll(data)
 		for upgrade in data["upgrades"]:
 			unlock(upgrade[0])
+			
+			if data["size"] % 2 == 0 and upgrade[0] == Unlocks.Expand:
+				unlock(upgrade[0])
 			
 			if upgrade[0] == Unlocks.Expand:
 				data["size"] = get_world_size()

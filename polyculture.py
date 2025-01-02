@@ -1,5 +1,8 @@
 def polyculture(data, water, startEntity):
 	field = fieldGrid(data["size"], startEntity)
+	if data["currentPos"] != (0, 0):
+		goto(data["currentPos"], (0, 0), data["size"])
+		data["currentPos"] = (0, 0)
 	
 	if startEntity == Entities.Bush and num_unlocked(Unlocks.Trees) > 0:
 		for x in range(data["size"]):
@@ -44,7 +47,7 @@ def polyculture(data, water, startEntity):
 				#field[companion[1][0]][companion[1][1]] = companion[0]
 				# check neighbour if tree
 				if companion[0] == Entities.Tree:
-					if polyIsValidTree(companionPos, field,  size):
+					if polyIsValidTree(companionPos, field,  data["size"]):
 						field[companionPos[0]][companionPos[1]] = Entities.Tree
 					else:
 						field[companionPos[0]][companionPos[1]] = startEntity
@@ -55,11 +58,6 @@ def polyculture(data, water, startEntity):
 		move(East)
 		
 def checkPolyculture(data, water, entity):
-	#currentPos = data["currentPos"]
-	#if data["currentPos"] != (0, 0):
-		#goto(data["currentPos"], (0, 0), data["size"])
-		#data["currentPos"] = (0, 0)
-		
 	if num_unlocked(Unlocks.Polyculture) > 0:
 		polyculture(data, water, entity)
 	else:

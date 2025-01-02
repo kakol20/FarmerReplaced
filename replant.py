@@ -68,7 +68,6 @@ def replantPumpkin(data, entity):
 	
 	field = fieldGrid(data["size"], False)
 	for z in range(3):
-		do_a_flip()
 		for x in range(data["size"]):
 			for y in range(data["size"]):
 				entityType = get_entity_type()
@@ -87,6 +86,7 @@ def replantPumpkin(data, entity):
 						field[x][y] = False
 				move(North)
 			move(East)
+		do_a_flip()
 			
 	data = fillRemaining(data, entity, field)
 	harvest()

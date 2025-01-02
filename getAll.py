@@ -50,10 +50,22 @@ def getAll(data):
 		for item in cost:
 			required[item] += cost[item]
 			
+		if data["size"] % 2 == 0 and upgrade[0] == Unlocks.Expand:
+			cost = get_cost(Unlocks.Expand, num_unlocked(Unlocks.Expand) + 1)
+			for item in cost:
+				required[item] += cost[item]
+			
 	for i in required:
-		required[i] *= num_unlocked(i)
+		if i == Items.Weird_Substance:
+			required[i] *= num_unlocked(Items.Fertilizer)
+		else:
+			required[i] *= num_unlocked(i)
+		
+	#if num_unlocked(Items.Fertilizer) > 0 and num_unlocked(Unlocks.Mazes) > 0:
+		#quick_print(num_unlocked(Unlocks.Mazes))
+		#pass
 	
-	water = 0.5
+	water = 0.3
 
 	#quick_print(" ")
 	quick_print(required)
@@ -62,13 +74,15 @@ def getAll(data):
 		if num_unlocked(Unlocks.Dinosaurs) > 0:
 			change_hat(Hats.Straw_Hat)
 		
-		if num_items(Items.Weird_Substance) < required[Items.Weird_Substance] and num_unlocked(Items.Fertilizer) > 0:
+		if num_items(Items.Weird_Substance) <= required[Items.Weird_Substance] and num_unlocked(Items.Fertilizer) > 0:
 			if num_items(Items.Hay) < intHayCost:
 				data = checkPolyculture(data, water, Entities.Grass)
-			elif num_items(Items.Wood) < intWoodCost or num_unlocked(Items.Carrot) <= 0:
+			elif num_items(Items.Wood) < intWoodCost:
 				data = checkPolyculture(data, water, Entities.Bush) 
-			else:
+			elif num_items(Items.Carrot) < intCarrotCost:
 				data = checkPolyculture(data, water, Entities.Carrot)
+			else:
+				data = checkPolyculture(data, water, Entities.Bush) 
 		elif num_items(Items.Power) < size * size and num_unlocked(Items.Power) > 0:
 			while num_items(Items.Power) < size * size * 30:
 				if num_items(Items.Hay) < intHayCost:
@@ -90,7 +104,7 @@ def getAll(data):
 				data = replantPumpkin(data, Entities.Pumpkin)
 			elif num_items(Items.Cactus) < required[Items.Cactus]:
 				data = farmSortable(Entities.Cactus, data)
-			elif num_items(Items.Gold) < required[Items.Gold]:
+			elif num_items(Items.Gold) < required[Items.Gold] and num_items(Items.Weird_Substance) >= required[Items.Weird_Substance]:
 				#clear()
 				data = startMaze(data)
 			elif num_items(Items.Bone) < required[Items.Bone]:
