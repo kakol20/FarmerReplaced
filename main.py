@@ -50,6 +50,8 @@ def main():
 				break
 			
 		if cheap == None:
+			data["upgrades"] = []
+			data = getAll(data)
 			break
 		
 		# find cheapest unlock
@@ -65,7 +67,10 @@ def main():
 					cheapCost = cost
 				
 		data["upgrades"] = [cheap]
-		quick_print(cheap)
+		if data["size"] % 2 == 1 and num_unlocked(Unlocks.Dinosaurs) > 0 and cheap[0] != Unlocks.Expand:
+			data["upgrades"].append((Unlocks.Expand, Unlocks.Speed))
+		
+		quick_print(data["upgrades"])
 		data = getAll(data)
 		for upgrade in data["upgrades"]:
 			unlock(upgrade[0])

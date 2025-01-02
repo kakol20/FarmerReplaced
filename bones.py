@@ -11,7 +11,11 @@ def getBonesEven(size):
 	#path.append(path[0])
 	
 	for i in range(0, size - 1, 1):
-		path.remove((i, 0))
+		if i != 0:
+			path.remove((i, 0))
+		
+	for x in range(size - 2, 0, -1):
+		path.append((x, 0))
 		
 	return path
 
@@ -51,23 +55,79 @@ def getBonesOdd(size):
 		path1.append(i)	
 	
 	return path1
+	
+def getPathIndex(pos, path):
+	for i in range(len(path)):
+		if path[i] == pos:
+			return i
+	pass
+	return 0
 			
 def getBones(data):
 	currentPos = (0, 0)
 	data["currentPos"] = currentPos
+	applePos = measure()
+	snakeLen = 2
+	lastIndex = 0
 	index = 1
+	appleIndex = getPathIndex(applePos, data["dinoPath"])
+	pathLen = len(data["dinoPath"])
 	while True:		
 		canMove = gotoDino(currentPos, data["dinoPath"][index])
-		currentPos = data["dinoPath"][index]
-		index += 1
 		
-		if not canMove:
+		# is trying to shortcut but can't
+		if (lastIndex + 1) % pathLen != index and not canMove and data["size"] % 2 == 0:
+			# try cycle
+			currentPos = getCurrentPos()
+			index = getPathIndex(currentPos, data["dinoPath"])
+			index = (index + 1) % pathLen
+			canMove = gotoDino(currentPos, data["dinoPath"][index])
+			currentPos = data["dinoPath"][index]
+		else:
+			currentPos = data["dinoPath"][index]
+		
+		lastIndex = index
+		
+		if currentPos == applePos:
+			applePos = measure()
+			appleIndex = getPathIndex(applePos, data["dinoPath"])
+			snakeLen += 1
+		
+		# only do optimisation at even sizes
+		indexDist = appleIndex - index
+		if data["size"] % 2 == 0 and applePos != None and indexDist > snakeLen:
+			# apple in front snake in cycle and not y = 0
+			if (applePos[0] == currentPos[0] or applePos[1] == currentPos[1]):
+				index = appleIndex
+			else:
+				index += 1
+		elif data["size"] % 2 == 0 and applePos != None and indexDist < 0:
+			# apple behind snake in cycle
+			indexDist = (pathLen - index) + appleIndex
+			if currentPos[1] == 1 and indexDist > snakeLen:
+				index = pathLen - currentPos[0]
+			else:
+				index += 1
+		elif data["size"] % 2 == 0 and applePos != None and applePos[1] == 0:
+			# apple in front snake in cycle and is y = 0
+			if currentPos[1] == 1 and indexDist > snakeLen:
+				index = pathLen - data["size"]
+				
+				if index != lastIndex:
+					index += 1
+			else:
+				index += 1
+		else:
+			index += 1
+		
+		if not canMove or applePos == None:
 			change_hat(Hats.Straw_Hat)
+			#quick_print(snakeLen)
 			break
 		else:
 			data["currentPos"] = currentPos
 		
-		if index >= len(data["dinoPath"]):
+		if index >= pathLen:
 			index = 0
 	return data
 			

@@ -67,7 +67,8 @@ def replantPumpkin(data, entity):
 		data["currentPos"] = (0, 0)
 	
 	field = fieldGrid(data["size"], False)
-	for z in range(4):
+	for z in range(3):
+		do_a_flip()
 		for x in range(data["size"]):
 			for y in range(data["size"]):
 				entityType = get_entity_type()
