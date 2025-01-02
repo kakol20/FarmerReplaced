@@ -37,7 +37,7 @@ def gotoDino(currentPos, targetPos):
 		elif xDist < 0:
 			if not move(West):
 				return False
-				
+	
 	for i in range(abs(yDist)):
 		if yDist > 0:
 			if not move(North):

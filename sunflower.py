@@ -1,7 +1,8 @@
 def farmSunflower(data, water):
 	#clear()
 	sorted_list = []
-	if data["currentPos"] != (0, 0):
+	data["currentPos"] = getCurrentPos()
+	if data["currentPos"][0] != 0 or data["currentPos"][1] != 0:
 		goto(data["currentPos"], (0, 0), data["size"])
 		data["currentPos"] = (0, 0)
 	currentPos = data["currentPos"]

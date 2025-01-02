@@ -42,7 +42,7 @@ def getAll(data):
 		Items.Bone: 0,
 		Items.Weird_Substance: size * num_unlocked(Unlocks.Mazes)
 	}
-	
+	 
 	for upgrade in data["upgrades"]:
 		cost = get_cost(upgrade[0])
 		quick_print(cost)

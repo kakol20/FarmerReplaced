@@ -47,7 +47,6 @@ def sortSortable(data):
 	while not sorted:
 		sorted = True
 		
-		#currentPos = getCurrentPos()
 		for j in range(size - 1):
 			for i in range(size):
 				index = i * size + j
@@ -90,6 +89,7 @@ def sortSortable(data):
 					sort_map[neighbour] = currentPos[0], currentPos[1], measure()
 					
 					sorted = False
+					
 	#currentPos = getCurrentPos()
 	#goto(currentPos, (size - 1, size - 1), size)#
 	data["currentPos"] = currentPos

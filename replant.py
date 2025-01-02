@@ -61,32 +61,28 @@ def replant(data, entity, water):
 # -----
 		
 def replantPumpkin(data, entity):
-	#data["currentPos"] = getCurrentPos()
-	if data["currentPos"][0] != 0 or data["currentPos"][1] != 0:
+	data["currentPos"] = getCurrentPos()
+	if not (data["currentPos"][0] == 0 and data["currentPos"][1] == 0):
 		goto(data["currentPos"], (0, 0), data["size"])
 		data["currentPos"] = (0, 0)
 	
-	field = fieldGrid(data["size"], False)
-	for z in range(3):
-		for x in range(data["size"]):
-			for y in range(data["size"]):
-				entityType = get_entity_type()
-				if entityType != entity:
-					if entityType != None:
-						while not can_harvest():
-							pass
-						harvest()
-					Till()
-					plant(entity)
-					
-					if z > 0:
-						field[x][y] = True
-				else:
-					if z > 0 and can_harvest():
-						field[x][y] = False
-				move(North)
-			move(East)
-		do_a_flip()
+	field = fieldGrid(data["size"], True)
+	for x in range(data["size"]):
+		for y in range(data["size"]):
+			below = get_entity_type()
+			if below != entity:
+				if below != None:
+					while not can_harvest():
+						pass
+					harvest()
+				Till()
+				plant(entity)
+				field[x][y] = True
+			else:
+				if can_harvest():
+					field[x][y] = False
+			move(North)
+		move(East)
 			
 	data = fillRemaining(data, entity, field)
 	harvest()
@@ -113,6 +109,7 @@ def fillRemaining(data, entity, field):
 					else:
 						field[x][y] = True
 						hasLeft = True
+		#do_a_flip()
 		keepChecking = hasLeft
 	
 	return data

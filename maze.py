@@ -52,5 +52,6 @@ def mazeOld(data):
 	if treasure != None:
 		data["currentPos"] = treasure
 	data["treasure"] = measure()
+	data["currentPos"] = getCurrentPos()
 	harvest()
 	return data
