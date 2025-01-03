@@ -32,12 +32,16 @@ def mazeOld(data):
 		delta = (treasure[0] - currentPos[0], treasure[1] - currentPos[1])
 		absDelta = (abs(delta[0]), abs(delta[1]))
 		
-		if delta[0] > 0 and absDelta[0] > absDelta[1]:
-			facing = 1
-		elif delta[0] < 0 and absDelta[0] > absDelta[1]:
-			facing = 3
-		elif delta[1] < 0 and absDelta[1] > absDelta[0]:
-			facing = 2
+		if absDelta[1] > absDelta[0]:
+			if delta[1] > 0:
+				facing = 0
+			else:
+				facing = 2
+		else:
+			if delta[0] > 0:
+				facing = 1
+			else:
+				facing = 3
 	else:
 		facing = 0
 	
