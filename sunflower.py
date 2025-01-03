@@ -8,18 +8,8 @@ def farmSunflower(data, water):
 	currentPos = data["currentPos"]
 	
 	for x in range(data["size"]):
-		for y in range(data["size"]):
-			belowEntity = get_entity_type()
-			
-			if belowEntity != None:
-				while not can_harvest():
-					pass
-				harvest()
-			
-			Till()
-			plant(Entities.Sunflower)
-			useFertilizer()
-			useWater(water)
+		for y in range(data["size"]):		
+			universalPlant(Entities.Sunflower)
 				
 			value = measure()
 			while value == None:

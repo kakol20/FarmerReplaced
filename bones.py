@@ -65,13 +65,20 @@ def getPathIndex(pos, path):
 			
 def getBones(data):
 	currentPos = (0, 0)
+	if data["currentPos"] != (0, 0):
+		goto(data["currentPos"], (0, 0), data["size"])
+		
+	change_hat(Hats.Dinosaur_Hat)
+	
 	data["currentPos"] = currentPos
+	
 	applePos = measure()
 	snakeLen = 2
 	lastIndex = 0
 	index = 1
 	appleIndex = getPathIndex(applePos, data["dinoPath"])
 	pathLen = len(data["dinoPath"])
+	
 	while True:		
 		canMove = gotoDino(currentPos, data["dinoPath"][index])
 		
@@ -122,7 +129,8 @@ def getBones(data):
 		
 		if not canMove or applePos == None:
 			change_hat(Hats.Straw_Hat)
-			#quick_print(snakeLen)
+			if snakeLen < data["size"] * data["size"]:
+				quick_print(snakeLen)
 			break
 		else:
 			data["currentPos"] = currentPos

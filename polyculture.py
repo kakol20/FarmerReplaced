@@ -16,31 +16,13 @@ def polyculture(data, water, startEntity):
 		for y in range(data["size"]):
 			companion = get_companion()
 			entity = field[x][y]
-			below = get_entity_type()
-			
-			if below != None:
-				while not can_harvest():
-					pass
-				harvest()
 			
 			if entity == Entities.Tree and num_unlocked(Unlocks.Trees) == 0:
 				entity = Entities.Bush
 				
 			field[x][y] = entity
 							
-			groundType = get_ground_type()
-			if entity == Entities.Grass:
-				if groundType == Grounds.Soil:
-					till()
-			elif entity == Entities.Carrot:
-				Till()
-				
-			if entity != Entities.Grass:
-				plant(entity)
-				
-			useWater(water)
-			if entity == Entities.Tree:
-				useFertilizer()
+			universalPlant(entity)
 				
 			if companion != None:
 				companionPos = (companion[1][0], companion[1][1])
@@ -58,6 +40,14 @@ def polyculture(data, water, startEntity):
 		move(East)
 		
 def checkPolyculture(data, water, entity):
+	carPlCost = get_cost(Entities.Carrot)
+	carrotCost = num_unlocked(Items.Carrot) * carPlCost[Items.Hay]
+	carrotCost = carrotCost * data["size"] * data["size"]
+	
+	if not (num_items(Items.Hay) > carrotCost and num_items(Items.Wood) > carrotCost):
+		replant(data, entity, water)
+		return data
+	
 	if num_unlocked(Unlocks.Polyculture) > 0:
 		polyculture(data, water, entity)
 	else:

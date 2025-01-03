@@ -98,3 +98,28 @@ def checkUnlock(unlock_):
 	if invalid:
 		return (False, costs)
 	return (True, costs)
+	
+def universalPlant(entity, useFert = True):
+	if get_entity_type() != None:
+		while not can_harvest():
+			pass
+		harvest()
+		
+	groundType = get_ground_type()
+	if entity == Entities.Grass:
+		if groundType == Grounds.Soil:
+			till()
+	elif not (entity == Entities.Bush or entity == Entities.Tree):
+		if groundType == Grounds.Grassland:
+			till()
+			
+	if entity != Entities.Grass:
+		
+		plant(entity)
+	
+	if not (entity == Entities.Bush or entity == Entities.Tree or entity == Entities.Grass):
+		useWater(0.3)
+		
+	if not (entity == Entities.Bush or entity == Entities.Grass):
+		if useFert:
+			useFertilizer()

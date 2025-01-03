@@ -1,12 +1,5 @@
 # https://bit.ly/41E2sTg
 
-def plantSortable(entity):
-	Till()
-	if get_entity_type() != entity:
-		if get_entity_type() != None:
-			harvest()
-		plant(entity)
-		
 def sowSortable(entity, data):
 	#currentPos = getCurrentPos()
 	#goto(currentPos, (0, 0), size)
@@ -16,8 +9,7 @@ def sowSortable(entity, data):
 	
 	for i in range(data["size"]):
 		for j in range(data["size"]):
-			useWater(0.3)
-			plantSortable(entity)
+			universalPlant(entity)
 			move(North)
 		move(East)
 		
