@@ -19,17 +19,6 @@ def testAll():
 	cacPlCost = get_cost(Entities.Cactus)
 	apPlCost = get_cost(Entities.Apple)
 	
-	required = {
-		Items.Hay: 0,
-		Items.Wood: 0,
-		Items.Carrot: 0,
-		Items.Pumpkin: 0,
-		Items.Cactus: 10000,
-		Items.Gold: 10000,
-		Items.Bone: 10000,
-		Items.Weird_Substance: size * num_unlocked(Unlocks.Mazes)
-	}
-	
 	intHayCost = 0
 	intWoodCost = 0
 	if carPlCost != {}:
@@ -50,30 +39,16 @@ def testAll():
 	if apPlCost != {}:
 		intPumpkinCost = max(intPumpkinCost, size * size * num_unlocked(Entities.Apple) * apPlCost[Items.Pumpkin])
 	 
-	
-	required[Items.Hay] = 0
-	required[Items.Wood] = 0
-	if carPlCost != {}:
-		required[Items.Hay] = size * size * num_unlocked(Items.Carrot) * carPlCost[Items.Hay]
-		required[Items.Wood] = size * size * num_unlocked(Items.Carrot) * carPlCost[Items.Wood]
-	required[Items.Hay] = max(required[Items.Hay], 10000)
-	required[Items.Wood] = max(required[Items.Wood], 10000)
-		
-	required[Items.Carrot] = 0
-	if puPlCost != {}:
-		required[Items.Carrot] = size * size * num_unlocked(Items.Pumpkin) * puPlCost[Items.Carrot] * 2
-	
-	if sfPlCost != {}:
-		required[Items.Carrot] = max(required[Items.Carrot], size * size * num_unlocked(Items.Power) * sfPlCost[Items.Carrot])
-	required[Items.Carrot] = max(required[Items.Carrot], 10000)
-		
-	required[Items.Pumpkin] = 0
-	if cacPlCost != {}:
-		required[Items.Pumpkin] = size * size * num_unlocked(Items.Cactus) * cacPlCost[Items.Pumpkin]
-		
-	if apPlCost != {}:
-		required[Items.Pumpkin] = max(required[Items.Pumpkin], size * size * num_unlocked(Entities.Apple) * apPlCost[Items.Pumpkin])
-	required[Items.Pumpkin] = max(required[Items.Pumpkin], 10000)
+	required = {
+		Items.Hay: max(intHayCost, 10000),
+		Items.Wood: max(intWoodCost, 10000),
+		Items.Carrot: max(intCarrotCost, 10000),
+		Items.Pumpkin: max(intPumpkinCost, 10000),
+		Items.Cactus: 10000,
+		Items.Gold: 10000,
+		Items.Bone: 10000,
+		Items.Weird_Substance: size * num_unlocked(Unlocks.Mazes)
+	}
 	
 	quick_print(required)
 	
@@ -81,16 +56,7 @@ def testAll():
 		if num_unlocked(Unlocks.Dinosaurs) > 0:
 			change_hat(Hats.Straw_Hat)
 		
-		if num_items(Items.Weird_Substance) <= required[Items.Weird_Substance] and num_unlocked(Items.Fertilizer) > 0:
-			if num_items(Items.Hay) < intHayCost:
-				data = checkPolyculture(data, water, Entities.Grass)
-			elif num_items(Items.Wood) < intWoodCost:
-				data = checkPolyculture(data, water, Entities.Bush) 
-			elif num_items(Items.Carrot) < intCarrotCost:
-				data = checkPolyculture(data, water, Entities.Carrot)
-			else:
-				data = checkPolyculture(data, water, Entities.Bush) 
-		elif num_items(Items.Power) < size * size and num_unlocked(Items.Power) > 0:
+		if num_items(Items.Power) < size * size and num_unlocked(Items.Power) > 0:
 			while num_items(Items.Power) < size * size * 30:
 				if num_items(Items.Hay) < intHayCost:
 					data = checkPolyculture(data, water, Entities.Grass)
@@ -111,9 +77,15 @@ def testAll():
 				data = replantPumpkin(data, Entities.Pumpkin)
 			elif num_items(Items.Cactus) < required[Items.Cactus]:
 				data = farmSortable(Entities.Cactus, data)
-			elif num_items(Items.Gold) < required[Items.Gold] and num_items(Items.Weird_Substance) >= required[Items.Weird_Substance]:
+			elif num_items(Items.Gold) < required[Items.Gold]:
 				#clear()
-				data = startMaze(data)
+				if num_items(Items.Weird_Substance) <= required[Items.Weird_Substance] and num_unlocked(Items.Fertilizer) > 0:
+					if num_items(Items.Hay) < intHayCost:
+						data = checkPolyculture(data, water, Entities.Grass)
+					else:
+						data = checkPolyculture(data, water, Entities.Bush)
+				else:
+					data = startMaze(data)
 			elif num_items(Items.Bone) < required[Items.Bone]:
 				#clear()
 				data = getBones(data)

@@ -40,18 +40,18 @@ def polyculture(data, water, startEntity):
 		move(East)
 		
 def checkPolyculture(data, water, entity):
-	carPlCost = get_cost(Entities.Carrot)
-	carrotCost = num_unlocked(Items.Carrot) * carPlCost[Items.Hay]
-	carrotCost = carrotCost * data["size"] * data["size"]
-	
-	if not (num_items(Items.Hay) > carrotCost and num_items(Items.Wood) > carrotCost):
-		replant(data, entity, water)
-		return data
-	
 	if num_unlocked(Unlocks.Polyculture) > 0:
-		polyculture(data, water, entity)
+		carPlCost = get_cost(Entities.Carrot)
+		carrotCost = num_unlocked(Items.Carrot) * carPlCost[Items.Hay]
+		carrotCost = carrotCost * data["size"] * data["size"]
+	
+		if not (num_items(Items.Hay) > carrotCost and num_items(Items.Wood) > carrotCost):
+			replant(data, entity, water)
+		else:
+			polyculture(data, water, entity)
 	else:
 		replant(data, entity, water)
+
 	return data
 		
 def polyIsValidTree(pos, field, size):
