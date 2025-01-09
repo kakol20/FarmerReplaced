@@ -19,10 +19,7 @@ def polyculture(data, water, startEntity):
 			
 			if entity == Entities.Tree and num_unlocked(Unlocks.Trees) == 0:
 				entity = Entities.Bush
-				
-			field[x][y] = entity
-							
-			universalPlant(entity)
+			
 				
 			if companion != None:
 				companionPos = (companion[1][0], companion[1][1])
@@ -35,6 +32,9 @@ def polyculture(data, water, startEntity):
 						field[companionPos[0]][companionPos[1]] = startEntity
 				else:
 					field[companionPos[0]][companionPos[1]] = companion[0]
+					
+			entity = field[x][y]
+			universalPlant(entity)
 			
 			move(North)
 		move(East)
