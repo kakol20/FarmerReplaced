@@ -64,9 +64,9 @@ def getPathIndex(pos, path):
 	return 0
 			
 def getBones(data):
+	clear()
+	
 	currentPos = (0, 0)
-	if data["currentPos"] != (0, 0):
-		goto(data["currentPos"], (0, 0), data["size"])
 		
 	change_hat(Hats.Dinosaur_Hat)
 	
@@ -102,9 +102,11 @@ def getBones(data):
 		
 		# only do optimisation at even sizes
 		indexDist = appleIndex - index
-		if data["size"] % 2 == 0 and applePos != None and indexDist > snakeLen:
+		if data["size"] % 2 == 0 and applePos != None and indexDist > snakeLen and currentPos[1] != 0 and applePos[1] != 0:
 			# apple in front snake in cycle and not y = 0
-			if (applePos[0] == currentPos[0] or applePos[1] == currentPos[1]):
+			if applePos[0] % 2 == 1 and currentPos[1] == data["size"] - 1:
+				index = appleIndex
+			elif applePos[0] % 2 == 0 and currentPos[1] == 1:
 				index = appleIndex
 			else:
 				index += 1
@@ -128,9 +130,10 @@ def getBones(data):
 			index += 1
 		
 		if not canMove or applePos == None:
-			change_hat(Hats.Straw_Hat)
 			if snakeLen < data["size"] * data["size"]:
 				quick_print(snakeLen)
+				pass
+			change_hat(Hats.Straw_Hat)
 			break
 		else:
 			data["currentPos"] = currentPos
