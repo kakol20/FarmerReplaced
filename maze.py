@@ -1,3 +1,5 @@
+from helpers import getCurrentPos
+
 def startMaze(data):
 	#clear()
 	#data["currentPos"] = (0, 0)

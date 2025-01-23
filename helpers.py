@@ -1,3 +1,6 @@
+from repeatable import useFertilizer
+from repeatable import useWater
+
 def goto(currentPos, targetPos, size):
 	xDist = targetPos[0] - currentPos[0]
 	yDist = targetPos[1] - currentPos[1]

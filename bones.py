@@ -1,3 +1,6 @@
+from helpers import gotoDino
+from helpers import getCurrentPos
+
 def getBonesEven(size):
 	path = []
 	#path.append((0, 0))

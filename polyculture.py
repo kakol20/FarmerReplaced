@@ -1,3 +1,8 @@
+from helpers import fieldGrid
+from helpers import universalPlant
+from replant import replant
+from helpers import goto
+
 def polyculture(data, water, startEntity):
 	field = fieldGrid(data["size"], startEntity)
 	if data["currentPos"] != (0, 0):

@@ -1,3 +1,5 @@
+from helpers import universalPlant
+
 def replant(data, entity, water):
 	if num_unlocked(Unlocks.Expand) <= 1:
 		x = 0
@@ -28,6 +30,7 @@ def replant(data, entity, water):
 				
 			move(North)
 		move(East)
+	return data
 		
 # -----
 		

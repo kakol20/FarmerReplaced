@@ -1,3 +1,12 @@
+from helpers import getCurrentPos
+from bones import updateDinoPath
+from polyculture import checkPolyculture
+from sunflower import farmSunflower
+from replant import replantPumpkin
+from sortable import farmSortable
+from maze import startMaze
+from bones import getBones
+
 def testAll():
 	data = {
 		"dinoPath": None,
@@ -92,5 +101,8 @@ def testAll():
 			else:
 				break
 
-testAll()
-pass
+if __name__ == "__main__":
+	testAll()
+	print("Test All Finished")
+else:
+	print(("__name__", __name__))

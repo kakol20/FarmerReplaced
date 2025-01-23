@@ -1,3 +1,9 @@
+from getAll import getAll
+from helpers import getCurrentPos
+from bones import updateDinoPath
+from helpers import goto
+from helpers import checkUnlock
+
 def main():
 	#getCertain()
 	goto(getCurrentPos(), (0, 0), get_world_size())
@@ -88,4 +94,7 @@ def main():
 
 	print("Done")
 
-main()
+if __name__ == "__main__":
+	main()
+else:
+	print(("__name__", __name__))

@@ -1,3 +1,7 @@
+from helpers import getCurrentPos
+from helpers import goto
+from helpers import universalPlant
+
 def farmSunflower(data, water):
 	#clear()
 	sorted_list = []
