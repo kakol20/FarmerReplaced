@@ -21,25 +21,31 @@ def getAll(data):
 	cacPlCost = get_cost(Entities.Cactus)
 	apPlCost = get_cost(Entities.Apple)
 	
+	carUnlocked = num_unlocked(Items.Carrot)
+	pumUnlocked = num_unlocked(Items.Pumpkin)
+	powUnlocked = num_unlocked(Items.Power)
+	cacUnlocked = num_unlocked(Items.Cactus)
+	aplUnlocked = num_unlocked(Entities.Apple)
+	
 	intHayCost = 0
 	intWoodCost = 0
-	if carPlCost != {}:
-		intHayCost = size * size * num_unlocked(Items.Carrot) * carPlCost[Items.Hay]
-		intWoodCost = size * size * num_unlocked(Items.Carrot) * carPlCost[Items.Wood]
+	if carPlCost != {} and carUnlocked > 0:
+		intHayCost = size * size * carUnlocked * carPlCost[Items.Hay]
+		intWoodCost = size * size * carUnlocked * carPlCost[Items.Wood]
 		
 	intCarrotCost = 0
-	if puPlCost != {}:
-		intCarrotCost = size * size * num_unlocked(Items.Pumpkin) * puPlCost[Items.Carrot] * 2
+	if puPlCost != {} and pumUnlocked > 0:
+		intCarrotCost = size * size * pumUnlocked * puPlCost[Items.Carrot] * 2
 	
-	if sfPlCost != {}:
-		intCarrotCost = max(intCarrotCost, size * size * num_unlocked(Items.Power) * sfPlCost[Items.Carrot])
+	if sfPlCost != {} and powUnlocked > 0:
+		intCarrotCost = max(intCarrotCost, size * size * powUnlocked * sfPlCost[Items.Carrot])
 		
 	intPumpkinCost = 0
-	if cacPlCost != {}:
-		intPumpkinCost = size * size * num_unlocked(Items.Cactus) * cacPlCost[Items.Pumpkin]
+	if cacPlCost != {} and cacUnlocked > 0:
+		intPumpkinCost = size * size * cacUnlocked * cacPlCost[Items.Pumpkin]
 		
-	if apPlCost != {}:
-		intPumpkinCost = max(intPumpkinCost, size * size * num_unlocked(Entities.Apple) * apPlCost[Items.Pumpkin])
+	if apPlCost != {} and aplUnlocked > 0:
+		intPumpkinCost = max(intPumpkinCost, size * size * aplUnlocked * apPlCost[Items.Pumpkin])
 	
 	required = {
 		Items.Hay: intHayCost,
