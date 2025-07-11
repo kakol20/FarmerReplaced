@@ -102,10 +102,19 @@ def getBones(data):
 			applePos = measure()
 			appleIndex = getPathIndex(applePos, data["dinoPath"])
 			snakeLen += 1
+			
+		if not canMove:
+			if snakeLen < data["size"] * data["size"]:
+				quick_print(snakeLen)
+				pass
+			change_hat(Hats.Straw_Hat)
+			break
 		
 		# only do optimisation at even sizes
 		indexDist = appleIndex - index
-		if data["size"] % 2 == 0 and applePos != None and indexDist > snakeLen and currentPos[1] != 0 and applePos[1] != 0:
+		if currentPos[0] == data["size"] - 1 or currentPos[1] == 0:
+			index += 1
+		elif data["size"] % 2 == 0 and applePos != None and indexDist > snakeLen and currentPos[1] != 0 and applePos[1] != 0:
 			# apple in front snake in cycle and not y = 0
 			if applePos[0] % 2 == 1 and currentPos[1] == data["size"] - 1:
 				index = appleIndex

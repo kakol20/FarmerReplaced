@@ -33,21 +33,22 @@ def gotoDino(currentPos, targetPos):
 	xDist = targetPos[0] - currentPos[0]
 	yDist = targetPos[1] - currentPos[1]
 	
-	for i in range(abs(xDist)):
-		if xDist > 0:
-			if not move(East):
-				return False
-		elif xDist < 0:
-			if not move(West):
-				return False
-	
-	for i in range(abs(yDist)):
-		if yDist > 0:
-			if not move(North):
-				return False
-		elif yDist < 0:
-			if not move(South):
-				return False
+	if xDist != 0:
+		for i in range(abs(xDist)):
+			if xDist > 0:
+				if not move(East):
+					return False
+			elif xDist < 0:
+				if not move(West):
+					return False
+	if yDist != 0:
+		for i in range(abs(yDist)):
+			if yDist > 0:
+				if not move(North):
+					return False
+			elif yDist < 0:
+				if not move(South):
+					return False
 	return True
 
 # -----
